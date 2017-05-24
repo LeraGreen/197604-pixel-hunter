@@ -1,7 +1,7 @@
 # Личный проект «Пиксель хантер» [![Build status][travis-image]][travis-url]
 
 * Студент: [Валерия Зелёная](https://up.htmlacademy.ru/ecmascript/2/user/197604).
-* Наставник: `Неизвестно`.
+* Наставник: [Евгений Щепотьев](https://htmlacademy.ru/profile/zeckson).
 
 ---
 
