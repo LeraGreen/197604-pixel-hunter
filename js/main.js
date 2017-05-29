@@ -27,12 +27,12 @@ TemplateContainer.prototype.makeArray = function () {
 
 TemplateContainer.prototype.showScreen = function (number) {
   const newScreen = this.arrayTemplates[number].innerHTML;
-  let container = document.querySelector(`.central`);
+  const container = document.querySelector(`.central`);
   container.innerHTML = newScreen;
 };
 
 TemplateContainer.prototype.moveScreenNext = function () {
-  let nextNumber = this.pointer + 1;
+  const nextNumber = this.pointer + 1;
   if (nextNumber <= this.pointerMax) {
     this.pointer = nextNumber;
     this.showScreen(this.pointer);
@@ -40,13 +40,13 @@ TemplateContainer.prototype.moveScreenNext = function () {
 };
 
 TemplateContainer.prototype.moveScreenPrev = function () {
-  let prevNumber = this.pointer - 1;
+  const prevNumber = this.pointer - 1;
   if (prevNumber >= this.pointerMin) {
     this.pointer = prevNumber;
     this.showScreen(this.pointer);
   }
 };
 
-document.addEventListener(`DOMContentLoaded`, function () {
+document.addEventListener(`DOMContentLoaded`, () => {
   new TemplateContainer(); // eslint-disable-line
 });
