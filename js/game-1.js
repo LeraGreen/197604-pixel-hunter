@@ -1,7 +1,6 @@
 import createEl from './createEl.js';
 import showScreen from './showScreen.js';
 import moduleGameTwoElement from './game-2.js';
-import moduleGreetingElement from './greeting.js';
 
 const gameOneEl = `<header class="header">
     <div class="header__back">
@@ -86,10 +85,6 @@ form.addEventListener(`change`, () => {
     event.preventDefault();
     showScreen(moduleGameTwoElement);
   }
-});
-const backButton = moduleGameOneElement.querySelector(`.header__back`);
-backButton.addEventListener(`click`, () => {
-  showScreen(moduleGreetingElement);
 });
 
 export default moduleGameOneElement;

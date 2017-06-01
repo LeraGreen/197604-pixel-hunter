@@ -1,6 +1,7 @@
 import createEl from './createEl.js';
 import showScreen from './showScreen.js';
 import moduleGreetingElement from './greeting.js';
+console.log(moduleGreetingElement);
 
 const introEl = `<div id="intro" class="intro">
       <h1 class="intro__asterisk">*</h1>

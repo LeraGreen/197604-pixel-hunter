@@ -1,7 +1,6 @@
 import createEl from './createEl.js';
 import showScreen from './showScreen.js';
 import moduleGameOneElement from './game-1.js';
-import moduleGreetingElement from './greeting.js';
 
 const rulesEl = `<header class="header">
     <div class="header__back">
@@ -53,9 +52,5 @@ nameUserInput.addEventListener(`input`, () => {
 rulesForm.addEventListener(`submit`, (event) => {
   event.preventDefault();
   showScreen(moduleGameOneElement);
-});
-const backButton = moduleRulesElement.querySelector(`.header__back`);
-backButton.addEventListener(`click`, () => {
-  showScreen(moduleGreetingElement);
 });
 export default moduleRulesElement;

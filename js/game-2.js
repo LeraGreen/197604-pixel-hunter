@@ -1,7 +1,6 @@
 import createEl from './createEl.js';
 import showScreen from './showScreen.js';
 import moduleGameThreeElement from './game-3.js';
-import moduleGreetingElement from './greeting.js';
 
 const gameTwoEl = `<header class="header">
     <div class="header__back">
@@ -65,8 +64,4 @@ for (const answer of answers) {
     showScreen(moduleGameThreeElement);
   });
 }
-const backButton = moduleGameTwoElement.querySelector(`.header__back`);
-backButton.addEventListener(`click`, () => {
-  showScreen(moduleGreetingElement);
-});
 export default moduleGameTwoElement;

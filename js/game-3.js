@@ -1,6 +1,5 @@
 import createEl from './createEl.js';
 import showScreen from './showScreen.js';
-import moduleGreetingElement from './greeting.js';
 import moduleStatsElement from './stats.js';
 
 const gameThreeEl = `<header class="header">
@@ -63,8 +62,4 @@ for (const option of gameOptions) {
     showScreen(moduleStatsElement);
   });
 }
-const backButton = moduleGameThreeElement.querySelector(`.header__back`);
-backButton.addEventListener(`click`, () => {
-  showScreen(moduleGreetingElement);
-});
 export default moduleGameThreeElement;
