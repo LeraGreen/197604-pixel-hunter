@@ -1,0 +1,16 @@
+import createEl from '../modules/createEl.js';
+import showScreen from '../modules/showScreen.js';
+import Greeting from './greeting.js';
+import footer from '../templates/footer-template.js';
+import header from '../templates/header-template.js';
+import statsString from '../templates/stats-template.js';
+
+function Stats() {
+  this.element = createEl(this.template);
+  this.backButton = this.element.querySelector(`.header__back`);
+  this.backButton.addEventListener(`click`, () => showScreen(new Greeting()));
+}
+
+Stats.prototype.template = `${header + statsString + footer}`;
+
+export default Stats;
