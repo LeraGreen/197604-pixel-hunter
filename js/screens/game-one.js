@@ -1,17 +1,17 @@
 import createEl from '../modules/createEl.js';
 import showScreen from '../modules/showScreen.js';
-import GameTwo from './game-two.js';
+import gameTwo from './game-two.js';
 import header from '../templates/header-template.js';
 import footer from '../templates/footer-template.js';
 import gameOneString from '../templates/game-one-template.js';
-import Greeting from './greeting.js';
+import greeting from './greeting.js';
 
 function GameOne() {
   this.element = createEl(this.template);
   this.form = this.element.querySelector(`.game__content`);
   this.form.addEventListener(`change`, () => this.countCheckedButtons());
   this.backButton = this.element.querySelector(`.header__back`);
-  this.backButton.addEventListener(`click`, () => showScreen(new Greeting()));
+  this.backButton.addEventListener(`click`, () => showScreen(greeting.element));
 }
 
 GameOne.prototype.template = `${header + gameOneString + footer}`;
@@ -29,8 +29,9 @@ GameOne.prototype.checkRadioButton = function (radioName) {
 GameOne.prototype.countCheckedButtons = function () {
   if (this.checkRadioButton(`question1`) && this.checkRadioButton(`question2`)) {
     event.preventDefault();
-    showScreen(new GameTwo());
+    showScreen(gameTwo.element);
   }
 };
 
-export default GameOne;
+const gameOne = new GameOne();
+export default gameOne;

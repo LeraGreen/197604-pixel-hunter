@@ -1,9 +1,9 @@
 import createEl from '../modules/createEl.js';
 import showScreen from '../modules/showScreen.js';
-import GameOne from './game-one.js';
+import gameOne from './game-one.js';
 import footer from '../templates/footer-template.js';
 import rulesString from '../templates/rules-template.js';
-import Greeting from './greeting.js';
+import greeting from './greeting.js';
 
 function Rules() {
   this.element = createEl(this.template);
@@ -13,12 +13,12 @@ function Rules() {
   this.nameUserInput.addEventListener(`input`, () => this.changeDisabled());
   this.rulesForm.addEventListener(`submit`, this.submitForm);
   this.backButton = this.element.querySelector(`.header__back`);
-  this.backButton.addEventListener(`click`, () => showScreen(new Greeting()));
+  this.backButton.addEventListener(`click`, () => showScreen(greeting.element));
 }
 
 Rules.prototype.submitForm = (event) => {
   event.preventDefault();
-  showScreen(new GameOne());
+  showScreen(gameOne.element);
 };
 
 Rules.prototype.changeDisabled = function () {
@@ -31,4 +31,5 @@ Rules.prototype.changeDisabled = function () {
 
 Rules.prototype.template = `${rulesString + footer}`;
 
-export default Rules;
+const rules = new Rules();
+export default rules;

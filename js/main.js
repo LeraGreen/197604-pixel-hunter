@@ -1,4 +1,4 @@
 import showScreen from './modules/showScreen.js';
-import Intro from './screens/intro.js';
+import intro from './screens/intro.js';
 
-showScreen(new Intro());
+showScreen(intro.element);

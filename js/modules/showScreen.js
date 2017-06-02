@@ -1,7 +1,7 @@
-const showScreen = (page) => {
+const showScreen = (element) => {
   const container = document.querySelector(`.central`);
   container.innerHTML = ``;
-  container.appendChild(page.element);
+  container.appendChild(element);
 };
 
 export default showScreen;
