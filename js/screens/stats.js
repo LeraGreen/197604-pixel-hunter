@@ -8,10 +8,10 @@ import statsString from '../templates/stats-template.js';
 function Stats() {
   this.element = createEl(this.template);
   this.backButton = this.element.querySelector(`.header__back`);
-  this.backButton.addEventListener(`click`, () => showScreen(greeting.element));
+  this.backButton.addEventListener(`click`, () => showScreen(greeting));
 }
 
 Stats.prototype.template = `${header + statsString + footer}`;
 
 const stats = new Stats();
-export default stats;
+export default stats.element;

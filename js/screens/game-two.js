@@ -10,13 +10,13 @@ function GameTwo() {
   this.element = createEl(this.template);
   this.answers = this.element.querySelectorAll(`.game__answer input`);
   this.backButton = this.element.querySelector(`.header__back`);
-  this.backButton.addEventListener(`click`, () => showScreen(greeting.element));
+  this.backButton.addEventListener(`click`, () => showScreen(greeting));
   for (const answer of this.answers) {
-    answer.addEventListener(`change`, () => (showScreen(gameThree.element)));
+    answer.addEventListener(`change`, () => (showScreen(gameThree)));
   }
 }
 
 GameTwo.prototype.template = `${header + gameTwoString + footer}`;
 
 const gameTwo = new GameTwo();
-export default gameTwo;
+export default gameTwo.element;

@@ -29,9 +29,9 @@ GameOne.prototype.checkRadioButton = function (radioName) {
 GameOne.prototype.countCheckedButtons = function () {
   if (this.checkRadioButton(`question1`) && this.checkRadioButton(`question2`)) {
     event.preventDefault();
-    showScreen(gameTwo.element);
+    showScreen(gameTwo);
   }
 };
 
 const gameOne = new GameOne();
-export default gameOne;
+export default gameOne.element;

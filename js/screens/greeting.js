@@ -7,10 +7,10 @@ import greetingString from '../templates/greeting-template.js';
 const Greeting = function () {
   this.element = createEl(this.template);
   this.greetingButton = this.element.querySelector(`.greeting__continue`);
-  this.greetingButton.addEventListener(`click`, () => showScreen(rules.element));
+  this.greetingButton.addEventListener(`click`, () => showScreen(rules));
 };
 
 Greeting.prototype.template = `${greetingString + footer}`;
 
 const greeting = new Greeting();
-export default greeting;
+export default greeting.element;

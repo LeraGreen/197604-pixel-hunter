@@ -6,10 +6,10 @@ import introString from '../templates/intro-template.js';
 function Intro() {
   this.element = createEl(this.template);
   this.introButton = this.element.querySelector(`.intro__asterisk`);
-  this.introButton.addEventListener(`click`, () => showScreen(greeting.element));
+  this.introButton.addEventListener(`click`, () => showScreen(greeting));
 }
 
 Intro.prototype.template = `${introString}`;
 
 const intro = new Intro();
-export default intro;
+export default intro.element;

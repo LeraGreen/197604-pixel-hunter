@@ -10,13 +10,13 @@ function GameThree() {
   this.element = createEl(this.template);
   this.gameOptions = this.element.querySelectorAll(`.game__option`);
   for (const option of this.gameOptions) {
-    option.addEventListener(`click`, () => (showScreen(stats.element)));
+    option.addEventListener(`click`, () => (showScreen(stats)));
   }
   this.backButton = this.element.querySelector(`.header__back`);
-  this.backButton.addEventListener(`click`, () => showScreen(greeting.element));
+  this.backButton.addEventListener(`click`, () => showScreen(greeting));
 }
 
 GameThree.prototype.template = `${header + gameThreeString + footer}`;
 
 const gameThree = new GameThree();
-export default gameThree;
+export default gameThree.element;

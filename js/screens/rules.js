@@ -13,12 +13,12 @@ function Rules() {
   this.nameUserInput.addEventListener(`input`, () => this.changeDisabled());
   this.rulesForm.addEventListener(`submit`, this.submitForm);
   this.backButton = this.element.querySelector(`.header__back`);
-  this.backButton.addEventListener(`click`, () => showScreen(greeting.element));
+  this.backButton.addEventListener(`click`, () => showScreen(greeting));
 }
 
 Rules.prototype.submitForm = (event) => {
   event.preventDefault();
-  showScreen(gameOne.element);
+  showScreen(gameOne);
 };
 
 Rules.prototype.changeDisabled = function () {
@@ -32,4 +32,4 @@ Rules.prototype.changeDisabled = function () {
 Rules.prototype.template = `${rulesString + footer}`;
 
 const rules = new Rules();
-export default rules;
+export default rules.element;
