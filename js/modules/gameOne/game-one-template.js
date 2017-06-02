@@ -1,4 +1,4 @@
-const gameOneString = `<div class="game">
+export default `<div class="game">
     <p class="game__task">Угадайте для каждого изображения фото или рисунок?</p>
     <form class="game__content">
       <div class="game__option">
@@ -39,4 +39,3 @@ const gameOneString = `<div class="game">
       </ul>
     </div>
   </div>`;
-export default gameOneString;

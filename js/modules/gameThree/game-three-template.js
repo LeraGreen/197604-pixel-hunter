@@ -1,4 +1,4 @@
-const gameThreeString = `<div class="game">
+export default `<div class="game">
     <p class="game__task">Найдите рисунок среди изображений</p>
     <form class="game__content  game__content--triple">
       <div class="game__option">
@@ -26,5 +26,3 @@ const gameThreeString = `<div class="game">
       </ul>
     </div>
   </div>`;
-
-export default gameThreeString;

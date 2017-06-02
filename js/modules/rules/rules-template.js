@@ -1,4 +1,4 @@
-const rulesString = `<header class="header">
+export default `<header class="header">
     <div class="header__back">
       <span class="back">
         <img src="img/arrow_left.svg" width="45" height="45" alt="Back">
@@ -22,5 +22,3 @@ const rulesString = `<header class="header">
       <button class="rules__button  continue" type="submit" disabled>Go!</button>
     </form>
   </div>`;
-
-export default rulesString;

@@ -1,4 +1,4 @@
-const statsString = `<div class="result">
+export default `<div class="result">
     <h1>Победа!</h1>
     <table class="result__table">
       <tr>
@@ -98,5 +98,3 @@ const statsString = `<div class="result">
       </tr>
     </table>
   </div>`;
-
-export default statsString;

@@ -1,4 +1,4 @@
-import showScreen from './modules/showScreen.js';
-import intro from './screens/intro.js';
+import {showScreen} from './modules/utils.js';
+import intro from './modules/intro/intro.js';
 
 showScreen(intro);
