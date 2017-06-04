@@ -1,12 +1,16 @@
-import {createArray, showScreen, createContent} from '../utils.js';
-import rules from '../rules/rules.js';
+import {showScreen, createContent} from '../utils.js';
+import Rules from '../rules/rules.js';
 import footer from '../footer/footer-template.js';
 import greetingString from './greeting-template.js';
 
-const greetingTemplate = `${greetingString}${footer}`;
-const greetingContent = createContent(greetingTemplate);
-const greetingArray = createArray(greetingContent.childNodes);
-const greetingButton = greetingContent.querySelector(`.greeting__continue`);
-greetingButton.addEventListener(`click`, () => showScreen(rules));
+function Greeting() {
+  const template = `${greetingString}${footer}`;
+  this.element = createContent(template);
+  const button = this.element.querySelector(`.greeting__continue`);
+  button.addEventListener(`click`, () => {
+    const rules = new Rules();
+    showScreen(rules.element);
+  });
+}
 
-export default greetingArray;
+export default Greeting;

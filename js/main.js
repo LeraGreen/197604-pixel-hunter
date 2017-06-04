@@ -1,4 +1,5 @@
 import {showScreen} from './modules/utils.js';
-import intro from './modules/intro/intro.js';
+import Intro from './modules/intro/intro.js';
 
-showScreen(intro);
+const intro = new Intro();
+showScreen(intro.element);
