@@ -3,7 +3,7 @@ import Stats from '../stats/stats.js';
 import header from '../header/header-template.js';
 import footer from '../footer/footer-template.js';
 import gameThreeString from './game-three-template.js';
-import Greeting from '../greeting/greeting.js'
+import Greeting from '../greeting/greeting.js';
 import {initialState} from '../../data.js';
 
 function GameThree() {
