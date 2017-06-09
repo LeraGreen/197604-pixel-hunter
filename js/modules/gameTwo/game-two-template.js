@@ -4,7 +4,6 @@ export default `<div class="game">
     <p class="game__task">${initialState.questions[0].question}</p>
     <form class="game__content ${initialState.questions[0].mod}">
       <div class="game__option">
-        <img src="${initialState.questions[0].answers[0].img}" alt="Option 1" width="" height=""  class="game__image">
         <label class="game__answer  game__answer--photo">
           <input name="question1" type="radio" value="photo">
           <span>Фото</span>

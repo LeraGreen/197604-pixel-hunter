@@ -12,7 +12,7 @@ export const initialState = {
       answers: [
         {
           img: `https://k42.kn3.net/CF42609C8.jpg`,
-          isPaint: true
+          isPhoto: false
         }
       ]
     },

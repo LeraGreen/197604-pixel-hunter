@@ -16,13 +16,23 @@ function GameThree() {
       showScreen(stats.element);
     });
   }
-  const images = this.element.querySelectorAll(`.game__image`);
+
+  const containers = this.element.querySelectorAll(`.game__option`);
+  let i = 0;
+  for (const container of containers) {
+    const image = new Image();
+    image.src = initialState.questions[2].answers[i++].img;
+    container.insertBefore(image, container.children[0]);
+    image.onload = () => {
+      resizeImages(image);
+    };
+  }
+
   const backButton = this.element.querySelector(`.header__back`);
   backButton.addEventListener(`click`, () => {
     const greeting = new Greeting();
     showScreen(greeting.element);
   });
-  resizeImages(images);
 }
 
 export default GameThree;

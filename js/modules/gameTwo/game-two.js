@@ -10,7 +10,18 @@ function GameTwo() {
   const template = `${header(initialState)}${gameTwoString}${footer}`;
   this.element = createContent(template);
   const answers = this.element.querySelectorAll(`.game__answer input`);
-  const images = this.element.querySelectorAll(`.game__image`);
+
+  const containers = this.element.querySelectorAll(`.game__option`);
+  let i = 0;
+  for (const container of containers) {
+    const image = new Image();
+    image.src = initialState.questions[0].answers[i++].img;
+    container.insertBefore(image, container.children[0]);
+    image.onload = () => {
+      resizeImages(image);
+    };
+  }
+
   const backButton = this.element.querySelector(`.header__back`);
   backButton.addEventListener(`click`, () => {
     const greeting = new Greeting();
@@ -22,7 +33,6 @@ function GameTwo() {
       showScreen(gameThree.element);
     });
   }
-  resizeImages(images);
 }
 
 
