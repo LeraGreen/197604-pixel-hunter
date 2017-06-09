@@ -1,14 +1,16 @@
+import {initialState} from '../../data.js';
+
 export default `<div class="game">
-    <p class="game__task">Найдите рисунок среди изображений</p>
-    <form class="game__content  game__content--triple">
+    <p class="game__task">${initialState.questions[2].question}</p>
+    <form class="game__content  ${initialState.questions[2].mod}">
       <div class="game__option">
-        <img src="http://placehold.it/304x455" alt="Option 1" width="304" height="455">
+        <img src="${initialState.questions[2].answers[0].img}" alt="Option 1" width="" height=""  class="game__image">
       </div>
       <div class="game__option  game__option--selected">
-        <img src="http://placehold.it/304x455" alt="Option 1" width="304" height="455">
+        <img src="${initialState.questions[2].answers[1].img}" alt="Option 1" width="" height=""  class="game__image">
       </div>
       <div class="game__option">
-        <img src="http://placehold.it/304x455" alt="Option 1" width="304" height="455">
+        <img src="${initialState.questions[2].answers[2].img}" alt="Option 1" width="" height=""  class="game__image">
       </div>
     </form>
     <div class="stats">

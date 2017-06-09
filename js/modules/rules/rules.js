@@ -11,17 +11,17 @@ function Rules() {
   const button = this.element.querySelector(`.rules__button`);
   const form = this.element.querySelector(`.rules__form`);
   nameUserInput.addEventListener(`input`, () => changeDisabled());
-  form.addEventListener(`submit`, (event) => submitForm());
+  const submitForm = (event) => {
+    event.preventDefault();
+    const gameOne = new GameOne();
+    showScreen(gameOne.element);
+  };
+  form.addEventListener(`submit`, submitForm);
   const backButton = this.element.querySelector(`.header__back`);
   backButton.addEventListener(`click`, () => {
     const greeting = new Greeting();
     showScreen(greeting.element);
   });
-  const submitForm = () => {
-    event.preventDefault();
-    const gameOne = new GameOne();
-    showScreen(gameOne.element);
-  };
   const changeDisabled = () => {
     if (nameUserInput.value === ``) {
       button.setAttribute(`disabled`, `disabled`);

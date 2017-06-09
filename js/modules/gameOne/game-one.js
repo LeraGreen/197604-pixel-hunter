@@ -1,13 +1,15 @@
-import {showScreen, createContent} from '../utils.js';
+import {showScreen, createContent, resizeImages} from '../utils.js';
 import GameTwo from '../gameTwo/game-two.js';
 import header from '../header/header-template.js';
 import footer from '../footer/footer-template.js';
 import gameOneString from './game-one-template.js';
 import Greeting from '../greeting/greeting.js';
+import {initialState} from '../../data.js';
 
 function GameOne() {
-  const template = `${header}${gameOneString}${footer}`;
+  const template = `${header(initialState)}${gameOneString}${footer}`;
   this.element = createContent(template);
+  const images = this.element.querySelectorAll(`.game__image`);
   const form = this.element.querySelector(`.game__content`);
   form.addEventListener(`change`, () => countCheckedButtons());
   const backButton = this.element.querySelector(`.header__back`);
@@ -31,6 +33,7 @@ function GameOne() {
       showScreen(gameTwo.element);
     }
   };
+  resizeImages(images);
 }
 
 export default GameOne;
