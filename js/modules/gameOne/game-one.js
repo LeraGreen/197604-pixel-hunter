@@ -4,7 +4,7 @@ import header from '../header/header-template.js';
 import footer from '../footer/footer-template.js';
 import gameOneString from './game-one-template.js';
 import Greeting from '../greeting/greeting.js';
-import {initialState} from '../../data.js';
+import {initialState} from '../../data/data.js';
 
 function GameOne() {
   const template = `${header(initialState)}${gameOneString}${footer}`;

@@ -1,4 +1,4 @@
-import {initialState} from '../../data.js';
+import {initialState} from '../../data/data.js';
 
 export default `<div class="game">
     <p class="game__task">${initialState.questions[2].question}</p>

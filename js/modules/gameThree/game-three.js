@@ -4,7 +4,7 @@ import header from '../header/header-template.js';
 import footer from '../footer/footer-template.js';
 import gameThreeString from './game-three-template.js';
 import Greeting from '../greeting/greeting.js';
-import {initialState} from '../../data.js';
+import {initialState} from '../../data/data.js';
 
 function GameThree() {
   const template = `${header(initialState)}${gameThreeString}${footer}`;
