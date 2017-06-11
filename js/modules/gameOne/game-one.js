@@ -1,33 +1,41 @@
-import {createArray, showScreen, createContent} from '../utils.js';
-import gameTwo from '../gameTwo/game-two.js';
+import {showScreen, createContent, createImg} from '../utils.js';
+import GameTwo from '../gameTwo/game-two.js';
 import header from '../header/header-template.js';
 import footer from '../footer/footer-template.js';
 import gameOneString from './game-one-template.js';
-import greeting from '../greeting/greeting.js';
+import Greeting from '../greeting/greeting.js';
+import {initialState, questions} from '../../data/data.js';
 
-const gameOneTemplate = `${header}${gameOneString}${footer}`;
-const gameOneContent = createContent(gameOneTemplate);
-const gameOneArray = createArray(gameOneContent.childNodes);
-const gameOneForm = gameOneContent.querySelector(`.game__content`);
-gameOneForm.addEventListener(`change`, () => countCheckedButtons());
-const gameOneBackButton = gameOneContent.querySelector(`.header__back`);
-gameOneBackButton.addEventListener(`click`, () => showScreen(greeting));
+function GameOne() {
+  const template = `${header(initialState)}${gameOneString(questions[1])}${footer}`;
+  this.element = createContent(template);
 
-const checkRadioButton = (radioName) => {
-  const radioButtons = gameOneForm.querySelectorAll(`input[name=${radioName}]`);
-  for (const radio of radioButtons) {
-    if (radio.checked) {
-      return true;
+  const containers = this.element.querySelectorAll(`.game__option`);
+  createImg(containers, questions[1]);
+
+  const form = this.element.querySelector(`.game__content`);
+  form.addEventListener(`change`, () => countCheckedButtons());
+  const backButton = this.element.querySelector(`.header__back`);
+  backButton.addEventListener(`click`, () => {
+    const greeting = new Greeting();
+    showScreen(greeting.element);
+  });
+  const checkRadioButton = (radioName) => {
+    const radioButtons = form.querySelectorAll(`input[name=${radioName}]`);
+    for (const radio of radioButtons) {
+      if (radio.checked) {
+        return true;
+      }
     }
-  }
-  return false;
-};
+    return false;
+  };
+  const countCheckedButtons = () => {
+    if (checkRadioButton(`question1`) && checkRadioButton(`question2`)) {
+      event.preventDefault();
+      const gameTwo = new GameTwo();
+      showScreen(gameTwo.element);
+    }
+  };
+}
 
-const countCheckedButtons = () => {
-  if (checkRadioButton(`question1`) && checkRadioButton(`question2`)) {
-    event.preventDefault();
-    showScreen(gameTwo);
-  }
-};
-
-export default gameOneArray;
+export default GameOne;

@@ -1,31 +1,34 @@
-import {createArray, showScreen, createContent} from '../utils.js';
-import gameOne from '../gameOne/game-one.js';
+import {showScreen, createContent} from '../utils.js';
+import GameOne from '../gameOne/game-one.js';
 import footer from '../footer/footer-template.js';
 import rulesString from './rules-template.js';
-import greeting from '../greeting/greeting.js';
+import Greeting from '../greeting/greeting.js';
 
-const rulesTemplate = `${rulesString}${footer}`;
-const rulesContent = createContent(rulesTemplate);
-const rulesArray = createArray(rulesContent.childNodes);
-const nameUserInput = rulesContent.querySelector(`.rules__input`);
-const rulesButton = rulesContent.querySelector(`.rules__button`);
-const rulesForm = rulesContent.querySelector(`.rules__form`);
-nameUserInput.addEventListener(`input`, () => changeDisabled());
-rulesForm.addEventListener(`submit`, (event) => submitForm());
-const rulesBackButton = rulesContent.querySelector(`.header__back`);
-rulesBackButton.addEventListener(`click`, () => showScreen(greeting));
+function Rules() {
+  const template = `${rulesString}${footer}`;
+  this.element = createContent(template);
+  const nameUserInput = this.element.querySelector(`.rules__input`);
+  const button = this.element.querySelector(`.rules__button`);
+  const form = this.element.querySelector(`.rules__form`);
+  nameUserInput.addEventListener(`input`, () => changeDisabled());
+  const submitForm = (event) => {
+    event.preventDefault();
+    const gameOne = new GameOne();
+    showScreen(gameOne.element);
+  };
+  form.addEventListener(`submit`, submitForm);
+  const backButton = this.element.querySelector(`.header__back`);
+  backButton.addEventListener(`click`, () => {
+    const greeting = new Greeting();
+    showScreen(greeting.element);
+  });
+  const changeDisabled = () => {
+    if (nameUserInput.value === ``) {
+      button.setAttribute(`disabled`, `disabled`);
+    } else {
+      button.removeAttribute(`disabled`);
+    }
+  };
+}
 
-const submitForm = () => {
-  event.preventDefault();
-  showScreen(gameOne);
-};
-
-const changeDisabled = () => {
-  if (nameUserInput.value === ``) {
-    rulesButton.setAttribute(`disabled`, `disabled`);
-  } else {
-    rulesButton.removeAttribute(`disabled`);
-  }
-};
-
-export default rulesArray;
+export default Rules;

@@ -1,18 +1,30 @@
-import {createArray, showScreen, createContent} from '../utils.js';
-import stats from '../stats/stats.js';
+import {showScreen, createContent, createImg} from '../utils.js';
+import Stats from '../stats/stats.js';
 import header from '../header/header-template.js';
 import footer from '../footer/footer-template.js';
 import gameThreeString from './game-three-template.js';
-import greeting from '../greeting/greeting.js';
+import Greeting from '../greeting/greeting.js';
+import {initialState, questions} from '../../data/data.js';
 
-const gameThreeTemplate = `${header}${gameThreeString}${footer}`;
-const gameThreeContent = createContent(gameThreeTemplate);
-const gameThreeArray = createArray(gameThreeContent.childNodes);
-const gameThreeOptions = gameThreeContent.querySelectorAll(`.game__option`);
-for (const option of gameThreeOptions) {
-  option.addEventListener(`click`, () => (showScreen(stats)));
+function GameThree() {
+  const template = `${header(initialState)}${gameThreeString(questions[2])}${footer}`;
+  this.element = createContent(template);
+  const gameOptions = this.element.querySelectorAll(`.game__option`);
+  for (const option of gameOptions) {
+    option.addEventListener(`click`, () => {
+      const stats = new Stats();
+      showScreen(stats.element);
+    });
+  }
+
+  const containers = this.element.querySelectorAll(`.game__option`);
+  createImg(containers, questions[2]);
+
+  const backButton = this.element.querySelector(`.header__back`);
+  backButton.addEventListener(`click`, () => {
+    const greeting = new Greeting();
+    showScreen(greeting.element);
+  });
 }
-const gameThreeBackButton = gameThreeContent.querySelector(`.header__back`);
-gameThreeBackButton.addEventListener(`click`, () => showScreen(greeting));
 
-export default gameThreeArray;
+export default GameThree;
