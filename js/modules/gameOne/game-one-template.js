@@ -1,8 +1,8 @@
-import {initialState} from '../../data/data.js';
+export default gameOneString;
 
-export default `<div class="game">
-    <p class="game__task">${initialState.questions[1].question}</p>
-    <form class="game__content ${initialState.questions[1].mod}">
+const gameOneString = (state) => `<div class="game">
+    <p class="game__task">${state.question}</p>
+    <form class="game__content ${state.mod}">
       <div class="game__option">
         <label class="game__answer game__answer--photo">
           <input name="question1" type="radio" value="photo">

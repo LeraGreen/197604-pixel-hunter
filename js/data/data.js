@@ -3,55 +3,62 @@ export const initialState = {
   time: 0,
   nameUser: ``,
   currentQuestion: 0,
-  answers: [],
-  questions: [
-    {
-      type: `gameTwo`,
-      mod: `game__content--wide`,
-      question: `Угадай, фото или рисунок`,
-      answers: [
-        {
-          img: `https://k42.kn3.net/CF42609C8.jpg`,
-          isPhoto: false
-        }
-      ]
-    },
-    {
-      type: `gameOne`,
-      mod: ``,
-      question: `Угадайте для каждого изображения фото или рисунок?`,
-      answers: [
-        {
-          img: `http://i.imgur.com/DKR1HtB.jpg`,
-          isPhoto: true
-        },
-        {
-          img: `https://i.imgur.com/DiHM5Zb.jpg`,
-          isPhoto: true
-        }
-      ]
-    },
-    {
-      type: `gameThree`,
-      mod: `game__content--triple`,
-      question: `Найдите рисунок среди изображений`,
-      answers: [
-        {
-          img: `http://i.imgur.com/DKR1HtB.jpg`,
-          isPhoto: true
-        },
-        {
-          img: `https://i.imgur.com/DiHM5Zb.jpg`,
-          isPhoto: true
-        },
-        {
-          img: `https://i.imgur.com/DiHM5Zb.jpg`,
-          isPhoto: true
-        }
-      ]
-    }
-  ]
+  answers: []
 };
+
+export const questions = [
+  {
+    type: `gameTwo`,
+    mod: `game__content--wide`,
+    question: `Угадай, фото или рисунок`,
+    answers: [
+      {
+        img: `https://k42.kn3.net/CF42609C8.jpg`,
+        isPhoto: false,
+        isPicture: true
+      }
+    ]
+  },
+  {
+    type: `gameOne`,
+    mod: ``,
+    question: `Угадайте для каждого изображения фото или рисунок?`,
+    answers: [
+      {
+        img: `http://i.imgur.com/DKR1HtB.jpg`,
+        isPhoto: true,
+        isPicture: false
+      },
+      {
+        img: `https://i.imgur.com/DiHM5Zb.jpg`,
+        isPhoto: true,
+        isPicture: false
+      }
+    ]
+  },
+  {
+    type: `gameThree`,
+    mod: `game__content--triple`,
+    question: `Найдите рисунок среди изображений`,
+    answers: [
+      {
+        img: `http://i.imgur.com/DKR1HtB.jpg`,
+        isPhoto: true,
+        isPicture: false
+      },
+      {
+        img: `https://i.imgur.com/DiHM5Zb.jpg`,
+        isPhoto: true,
+        isPicture: false
+      },
+      {
+        img: `https://i.imgur.com/DiHM5Zb.jpg`,
+        isPhoto: true,
+        isPicture: false
+      }
+    ]
+  }
+];
 
 export const settings = {
   maxLives: 3,
