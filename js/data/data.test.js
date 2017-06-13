@@ -190,7 +190,7 @@ describe(`type of questions`, () => {
       startDate: new Date(2017, 4, 6, 6, 6, 0),
       type: `one is right`,
       questions: [],
-      points: 0
+      points: []
     };
     const userAnswer = {
       date: new Date(2017, 4, 6, 6, 6, 22),
@@ -235,7 +235,7 @@ describe(`type of questions`, () => {
       startDate: new Date(2017, 4, 6, 6, 6, 0),
       type: `one is right`,
       questions: [],
-      points: 0
+      points: []
     };
     const userAnswer = {
       date: new Date(2017, 4, 6, 6, 6, 9),
@@ -280,7 +280,7 @@ describe(`type of questions`, () => {
       startDate: new Date(2017, 4, 6, 6, 6, 0),
       type: `one is right`,
       questions: [],
-      points: 0
+      points: []
     };
     const userAnswer = {
       date: new Date(2017, 4, 6, 6, 6, 12),
@@ -326,7 +326,7 @@ describe(`type of questions`, () => {
       startDate: new Date(2017, 4, 6, 6, 6, 0),
       type: `one is right`,
       questions: [],
-      points: 0
+      points: []
     };
     const userAnswer = {
       date: new Date(2017, 4, 6, 6, 6, 30),
@@ -368,20 +368,372 @@ describe(`type of questions`, () => {
   });
 });
 
+describe(`points from questions`, () => {
+  it(`Should return 50 if question is slow`, () => {
+    const roundState = {
+      startDate: new Date(2017, 4, 6, 6, 6, 0),
+      type: `one is right`,
+      questions: [],
+      points: []
+    };
+    const userAnswer = {
+      date: new Date(2017, 4, 6, 6, 6, 22),
+      num: 1,
+      answer: true
+    };
+    const settings = {
+      maxLives: 3,
+      screens: 10,
+      answers: [
+        {
+          title: `wrong`,
+          isCorrect: false,
+          points: 0
+        },
+        {
+          title: `slow`,
+          isCorrect: true,
+          points: 50,
+          time: 30,
+        },
+        {
+          title: `correct`,
+          isCorrect: true,
+          points: 50,
+          time: 20
+        },
+        {
+          title: `fast`,
+          isCorrect: true,
+          points: 50,
+          time: 10
+        }
+      ],
+      timeToAnswer: 30
+    };
+    assert.equal(checkAnswerType(roundState, settings, userAnswer).points[0], 50);
+  });
+
+  it(`Should return 100 if question is correct`, () => {
+    const roundState = {
+      startDate: new Date(2017, 4, 6, 6, 6, 0),
+      type: `one is right`,
+      questions: [],
+      points: []
+    };
+    const userAnswer = {
+      date: new Date(2017, 4, 6, 6, 6, 15),
+      num: 1,
+      answer: true
+    };
+    const settings = {
+      maxLives: 3,
+      screens: 10,
+      answers: [
+        {
+          title: `wrong`,
+          isCorrect: false,
+          points: 0
+        },
+        {
+          title: `slow`,
+          isCorrect: true,
+          points: 50,
+          time: 30,
+        },
+        {
+          title: `correct`,
+          isCorrect: true,
+          points: 50,
+          time: 20
+        },
+        {
+          title: `fast`,
+          isCorrect: true,
+          points: 50,
+          time: 10
+        }
+      ],
+      timeToAnswer: 30
+    };
+    assert.equal(checkAnswerType(roundState, settings, userAnswer).points[0], 100);
+  });
+
+  it(`Should return 150 if question is fast`, () => {
+    const roundState = {
+      startDate: new Date(2017, 4, 6, 6, 6, 0),
+      type: `one is right`,
+      questions: [],
+      points: []
+    };
+    const userAnswer = {
+      date: new Date(2017, 4, 6, 6, 6, 2),
+      num: 1,
+      answer: true
+    };
+    const settings = {
+      maxLives: 3,
+      screens: 10,
+      answers: [
+        {
+          title: `wrong`,
+          isCorrect: false,
+          time: 30,
+          points: []
+        },
+        {
+          title: `slow`,
+          isCorrect: true,
+          points: 50,
+          time: 30,
+        },
+        {
+          title: `correct`,
+          isCorrect: true,
+          points: 50,
+          time: 20
+        },
+        {
+          title: `fast`,
+          isCorrect: true,
+          points: 50,
+          time: 10
+        }
+      ],
+      timeToAnswer: 30
+    };
+    assert.equal(checkAnswerType(roundState, settings, userAnswer).points[0], 150);
+  });
+
+  it(`Should return 0 if question is wrong`, () => {
+    const roundState = {
+      startDate: new Date(2017, 4, 6, 6, 6, 0),
+      type: `one is right`,
+      questions: [],
+      points: []
+    };
+    const userAnswer = {
+      date: new Date(2017, 4, 6, 6, 6, 2),
+      num: 1,
+      answer: false
+    };
+    const settings = {
+      maxLives: 3,
+      screens: 10,
+      answers: [
+        {
+          title: `wrong`,
+          isCorrect: false,
+          time: 30,
+          points: []
+        },
+        {
+          title: `slow`,
+          isCorrect: true,
+          points: 50,
+          time: 30,
+        },
+        {
+          title: `correct`,
+          isCorrect: true,
+          points: 50,
+          time: 20
+        },
+        {
+          title: `fast`,
+          isCorrect: true,
+          points: 50,
+          time: 10
+        }
+      ],
+      timeToAnswer: 30
+    };
+    assert.equal(checkAnswerType(roundState, settings, userAnswer).points[0], 0);
+  });
+
+  it(`Should return 0 if user didn't answer`, () => {
+    const roundState = {
+      startDate: new Date(2017, 4, 6, 6, 6, 0),
+      type: `one is right`,
+      questions: [],
+      points: []
+    };
+    const userAnswer = {
+      date: new Date(2017, 4, 6, 6, 6, 30),
+      num: 1,
+      answer: null
+    };
+    const settings = {
+      maxLives: 3,
+      screens: 10,
+      answers: [
+        {
+          title: `wrong`,
+          isCorrect: false,
+          time: 30,
+          points: 0
+        },
+        {
+          title: `slow`,
+          isCorrect: true,
+          points: 50,
+          time: 30,
+        },
+        {
+          title: `correct`,
+          isCorrect: true,
+          points: 50,
+          time: 20
+        },
+        {
+          title: `fast`,
+          isCorrect: true,
+          points: 50,
+          time: 10
+        }
+      ],
+      timeToAnswer: 30
+    };
+    assert.equal(checkAnswerType(roundState, settings, userAnswer).points[0], 0);
+  });
+});
+
+describe(`points from lives`, () => {
+  it(`Should return 50 if one life is left`, () => {
+    const initialState = {
+      lives: 1,
+      points: [150, 50, 0, 150]
+    };
+    assert.equal(calcLivesPoints(initialState).points[4], 50);
+  });
+
+  it(`Should return 100 if two lives are left`, () => {
+    const initialState = {
+      lives: 2,
+      points: [150, 50, 0, 150]
+    };
+    assert.equal(calcLivesPoints(initialState).points[4], 100);
+  });
+
+  it(`Should return 150 if three lives are left`, () => {
+    const initialState = {
+      lives: 3,
+      points: [150, 50, 0, 150]
+    };
+    assert.equal(calcLivesPoints(initialState).points[4], 150);
+  });
+
+  it(`Should return 0 if 0 life is left`, () => {
+    const initialState = {
+      lives: 0,
+      points: [150, 50, 0, 150]
+    };
+    assert.equal(calcLivesPoints(initialState).points[4], 0);
+  });
+});
+
+
+describe(`change screen`, () => {
+  it(`Should return greeting if current screen is intro`, () => {
+    const initialState = {
+      lives: 2,
+      time: 0,
+      nameUser: ``,
+      currentQuestion: 0,
+      currentScreen: `intro`,
+      answers: []
+    };
+    const screensSettings = {
+      'main': `intro`,
+      'intro': `greeting`,
+      'greeting': `rules`,
+      'rules': `gameOne`,
+      'gameOne': `gameTwo`,
+      'gameTwo': `gameThree`,
+      'gameThree': `stats`
+    };
+    assert.equal(changeScreen(initialState, screensSettings).currentScreen, `greeting`);
+  });
+
+  it(`Should return stats if user has no lives`, () => {
+    const initialState = {
+      lives: 0,
+      time: 0,
+      nameUser: ``,
+      currentQuestion: 0,
+      currentScreen: `intro`,
+      answers: []
+    };
+    const screensSettings = {
+      'main': `intro`,
+      'intro': `greeting`,
+      'greeting': `rules`,
+      'rules': `gameOne`,
+      'gameOne': `gameTwo`,
+      'gameTwo': `gameThree`,
+      'gameThree': `stats`
+    };
+    assert.equal(changeScreen(initialState, screensSettings).currentScreen, `stats`);
+  });
+
+  it(`Should return gameOne if current screen is rules`, () => {
+    const initialState = {
+      lives: 2,
+      time: 0,
+      nameUser: ``,
+      currentQuestion: 0,
+      currentScreen: `rules`,
+      answers: []
+    };
+    const screensSettings = {
+      'main': `intro`,
+      'intro': `greeting`,
+      'greeting': `rules`,
+      'rules': `gameOne`,
+      'gameOne': `gameTwo`,
+      'gameTwo': `gameThree`,
+      'gameThree': `stats`
+    };
+    assert.equal(changeScreen(initialState, screensSettings).currentScreen, `gameOne`);
+  });
+});
+
+
 // функции для тестов
+const changeScreen = (initialState, screensSettings) => {
+  initialState.currentScreen = screensSettings[initialState.currentScreen];
+  if (initialState.lives === 0) {
+    initialState.currentScreen = `stats`;
+  }
+  return initialState;
+};
+
+
+const calcLivesPoints = (initialState) => {
+  let points = 0;
+  for (let i = initialState.lives; i > 0; i--) {
+    points += 50;
+  }
+  initialState.points.push(points);
+  return initialState;
+};
 
 const checkAnswerType = (roundState, settings, userAnswer) => {
   const answerTime = userAnswer.date.getSeconds() - roundState.startDate.getSeconds();
   let answerType = ``;
+  let points = 0;
   settings.answers.forEach((answer) => {
     if (answer.isCorrect === userAnswer.answer && answerTime <= answer.time) {
       answerType = answer.title;
+      points += answer.points;
     }
     if (answerTime >= settings.timeToAnswer && userAnswer.answer === null) {
       answerType = `wrong`;
+      points = 0;
     }
   });
   roundState.questions.push(answerType);
+  roundState.points.push(points);
   return roundState;
 };
 
