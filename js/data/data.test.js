@@ -23,7 +23,7 @@ describe(`right answers`, () => {
         num: 1,
         answer: false
       };
-      assert.equal(checkAnswer(roundState, userAnswer), true);
+      assert.equal(checkAnswer(roundState.questions, userAnswer.num, userAnswer.answer), true);
     });
 
     it(`Should return false if received answer not equal correct answer`, () => {
@@ -45,7 +45,7 @@ describe(`right answers`, () => {
         num: 2,
         answer: false
       };
-      assert.equal(checkAnswer(roundState, userAnswer), false);
+      assert.equal(checkAnswer(roundState.questions, userAnswer.num, userAnswer.answer), false);
     });
   });
 
@@ -63,7 +63,7 @@ describe(`right answers`, () => {
         num: 0,
         answer: false
       };
-      assert.equal(checkAnswer(roundState, userAnswer), true);
+      assert.equal(checkAnswer(roundState.questions, userAnswer.num, userAnswer.answer), true);
     });
 
     it(`Should return false if received answer not equal correct answer`, () => {
@@ -79,7 +79,7 @@ describe(`right answers`, () => {
         num: 0,
         answer: true
       };
-      assert.equal(checkAnswer(roundState, userAnswer), false);
+      assert.equal(checkAnswer(roundState.questions, userAnswer.num, userAnswer.answer), false);
     });
   });
 
@@ -143,23 +143,23 @@ describe(`right answers`, () => {
 describe(`type of questions`, () => {
   it(`Should return slow if questions correct and take less then 30 seconds`, () => {
     const userAnswer = {
-      date: 22
+      time: 22
     };
-    assert.equal(checkAnswerType(userAnswer), `slow`);
+    assert.equal(checkAnswerType(userAnswer.time), `slow`);
   });
 
   it(`Should return fast if questions correct and take less then 10 seconds`, () => {
     const userAnswer = {
-      date: 9
+      time: 9
     };
-    assert.equal(checkAnswerType(userAnswer), `fast`);
+    assert.equal(checkAnswerType(userAnswer.time), `fast`);
   });
 
   it(`Should return wrong if questions not correct or user didn't answer`, () => {
     const userAnswer = {
-      date: -1
+      time: -1
     };
-    assert.equal(checkAnswerType(userAnswer), `wrong`);
+    assert.equal(checkAnswerType(userAnswer.time), `wrong`);
   });
 });
 
@@ -168,28 +168,28 @@ describe(`points from questions`, () => {
     const roundState = {
       questions: [`slow`]
     };
-    assert.equal(calcAnswerPoints(roundState), 50);
+    assert.equal(calcAnswerPoints(roundState.questions), 50);
   });
 
   it(`Should return 100 if question is correct`, () => {
     const roundState = {
       questions: [`correct`]
     };
-    assert.equal(calcAnswerPoints(roundState), 100);
+    assert.equal(calcAnswerPoints(roundState.questions), 100);
   });
 
   it(`Should return 150 if question is fast`, () => {
     const roundState = {
       questions: [`fast`]
     };
-    assert.equal(calcAnswerPoints(roundState), 150);
+    assert.equal(calcAnswerPoints(roundState.questions), 150);
   });
 
   it(`Should return 0 if question is wrong or user didn't answer`, () => {
     const roundState = {
       questions: [`wrong`]
     };
-    assert.equal(calcAnswerPoints(roundState), 0);
+    assert.equal(calcAnswerPoints(roundState.questions), 0);
   });
 });
 

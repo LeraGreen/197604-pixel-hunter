@@ -12,6 +12,20 @@ export const settings = {
   timeToAnswer: 30
 };
 
+const AnswerType = {
+  SLOW: `slow`,
+  FAST: `fast`,
+  CORRECT: `correct`,
+  WRONG: `wrong`
+};
+
+export const points = {
+  'wrong': 0,
+  'slow': 50,
+  'correct': 100,
+  'fast': 150
+};
+
 export const questions = [
   {
     type: `gameTwo`,
@@ -60,61 +74,45 @@ export const questions = [
   }
 ];
 
-
 export const calcLivesPoints = (state) => {
-  let points = 0;
-  if (state.lives === 0) {
-    return points;
-  }
+  let questionsPoints = 0;
   for (let i = state.lives; i > 0; i--) {
-    points += 50;
+    questionsPoints += 50;
   }
-  return points;
+  return questionsPoints;
 };
 
-export const calcAnswerPoints = (roundState) => {
-  const points = {
-    'wrong': 0,
-    'slow': 50,
-    'correct': 100,
-    'fast': 150
-  };
-  return points[roundState.questions[0]];
+export const calcAnswerPoints = (question) => {
+  return points[question];
 };
 
-export const checkAnswerType = (userAnswer) => {
-  if (userAnswer.date === -1) {
-    return `wrong`;
+export const checkAnswerType = (time) => {
+  if (time === -1) {
+    return AnswerType.WRONG;
   }
-  if (userAnswer.date !== -1 && userAnswer.date < 10) {
-    return `fast`;
+  if (time !== -1 && time < 10) {
+    return AnswerType.FAST;
   }
-  if (userAnswer.date > 20 && userAnswer.date <= 30) {
-    return `slow`;
+  if (time > 20 && time <= 30) {
+    return AnswerType.SLOW;
   }
-  if (userAnswer.date >= 10 && userAnswer.date <= 20) {
-    return `correct`;
+  if (time >= 10 && time <= 20) {
+    return AnswerType.CORRECT;
   }
-  return `wrong`;
+  return AnswerType.WRONG;
 };
 
-export const checkAnswer = (state, answer) => {
-  if (state.questions[answer.num].isPhoto !== answer.answer) {
-    return false;
-  }
-  return true;
+export const checkAnswer = (questionsList, number, answer) => {
+  return (questionsList[number].isPhoto === answer);
 };
 
 export const checkAnswers = (state, answer) => {
-  let isFound = true;
   for (let i = 0; i < state.questions.length; i++) {
-    if (answer.answer[i] === state.questions[i].isPhoto) {
-      isFound = true;
-    } else {
-      return (isFound = false);
+    if (answer.answer[i] !== state.questions[i].isPhoto) {
+      return false;
     }
   }
-  return isFound;
+  return true;
 };
 
 
