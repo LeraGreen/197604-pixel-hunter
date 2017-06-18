@@ -6,6 +6,26 @@ export const initialState = {
   answers: []
 };
 
+export const settings = {
+  maxLives: 3,
+  screens: 10,
+  timeToAnswer: 30
+};
+
+const AnswerType = {
+  SLOW: `slow`,
+  FAST: `fast`,
+  CORRECT: `correct`,
+  WRONG: `wrong`
+};
+
+export const points = {
+  'wrong': 0,
+  'slow': 50,
+  'correct': 100,
+  'fast': 150
+};
+
 export const questions = [
   {
     type: `gameTwo`,
@@ -14,8 +34,7 @@ export const questions = [
     answers: [
       {
         img: `https://k42.kn3.net/CF42609C8.jpg`,
-        isPhoto: false,
-        isPicture: true
+        isPhoto: false
       }
     ]
   },
@@ -26,13 +45,11 @@ export const questions = [
     answers: [
       {
         img: `http://i.imgur.com/DKR1HtB.jpg`,
-        isPhoto: true,
-        isPicture: false
+        isPhoto: true
       },
       {
         img: `https://i.imgur.com/DiHM5Zb.jpg`,
-        isPhoto: true,
-        isPicture: false
+        isPhoto: true
       }
     ]
   },
@@ -43,52 +60,59 @@ export const questions = [
     answers: [
       {
         img: `http://i.imgur.com/DKR1HtB.jpg`,
-        isPhoto: true,
-        isPicture: false
+        isPhoto: true
       },
       {
         img: `https://i.imgur.com/DiHM5Zb.jpg`,
-        isPhoto: true,
-        isPicture: false
+        isPhoto: true
       },
       {
         img: `https://i.imgur.com/DiHM5Zb.jpg`,
-        isPhoto: true,
-        isPicture: false
+        isPhoto: true
       }
     ]
   }
 ];
 
-export const settings = {
-  maxLives: 3,
-  screens: 10,
-  answers: [
-    {
-      title: `wrong`,
-      isCorrect: false,
-      points: 0
-    },
-    {
-      title: `slow`,
-      isCorrect: true,
-      points: 50,
-      time: 30,
-    },
-    {
-      title: `correct`,
-      isCorrect: true,
-      points: 50,
-      time: 20
-    },
-    {
-      title: `fast`,
-      isCorrect: true,
-      points: 50,
-      time: 10
+export const calcLivesPoints = (state) => {
+  let questionsPoints = 0;
+  for (let i = state.lives; i > 0; i--) {
+    questionsPoints += 50;
+  }
+  return questionsPoints;
+};
+
+export const calcAnswerPoints = (question) => {
+  return points[question];
+};
+
+export const checkAnswerType = (time) => {
+  if (time === -1) {
+    return AnswerType.WRONG;
+  }
+  if (time !== -1 && time < 10) {
+    return AnswerType.FAST;
+  }
+  if (time > 20 && time <= 30) {
+    return AnswerType.SLOW;
+  }
+  if (time >= 10 && time <= 20) {
+    return AnswerType.CORRECT;
+  }
+  return AnswerType.WRONG;
+};
+
+export const checkAnswer = (questionsList, number, answer) => {
+  return (questionsList[number].isPhoto === answer);
+};
+
+export const checkAnswers = (state, answer) => {
+  for (let i = 0; i < state.questions.length; i++) {
+    if (answer.answer[i] !== state.questions[i].isPhoto) {
+      return false;
     }
-  ],
-  timeToAnswer: 30
+  }
+  return true;
 };
 
 
