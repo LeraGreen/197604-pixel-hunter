@@ -163,36 +163,6 @@ describe(`type of questions`, () => {
   });
 });
 
-describe(`points from questions`, () => {
-  it(`Should return 50 if question is slow`, () => {
-    const roundState = {
-      questions: [`slow`]
-    };
-    assert.equal(calcAnswerPoints(roundState.questions), 50);
-  });
-
-  it(`Should return 100 if question is correct`, () => {
-    const roundState = {
-      questions: [`correct`]
-    };
-    assert.equal(calcAnswerPoints(roundState.questions), 100);
-  });
-
-  it(`Should return 150 if question is fast`, () => {
-    const roundState = {
-      questions: [`fast`]
-    };
-    assert.equal(calcAnswerPoints(roundState.questions), 150);
-  });
-
-  it(`Should return 0 if question is wrong or user didn't answer`, () => {
-    const roundState = {
-      questions: [`wrong`]
-    };
-    assert.equal(calcAnswerPoints(roundState.questions), 0);
-  });
-});
-
 describe(`points from lives`, () => {
   it(`Should return 50 if one life is left`, () => {
     const initialState = {

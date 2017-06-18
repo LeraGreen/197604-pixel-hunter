@@ -19,12 +19,11 @@ const AnswerType = {
   WRONG: `wrong`
 };
 
-export const points = {
-  'wrong': 0,
-  'slow': 50,
-  'correct': 100,
-  'fast': 150
-};
+export const points = {};
+points[AnswerType.WRONG] = 0;
+points[AnswerType.SLOW] = 50;
+points[AnswerType.CORRECT] = 100;
+points[AnswerType.FAST] = 150;
 
 export const questions = [
   {
@@ -80,10 +79,6 @@ export const calcLivesPoints = (state) => {
     questionsPoints += 50;
   }
   return questionsPoints;
-};
-
-export const calcAnswerPoints = (question) => {
-  return points[question];
 };
 
 export const checkAnswerType = (time) => {
