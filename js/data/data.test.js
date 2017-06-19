@@ -1,5 +1,5 @@
 import assert from 'assert';
-import {checkAnswer, checkAnswers, checkAnswerType, calcLivesPoints, calcAnswerPoints} from './data.js';
+import {checkAnswer, checkAnswers, checkAnswerType, calcLivesPoints} from './data.js';
 
 describe(`right answers`, () => {
 
