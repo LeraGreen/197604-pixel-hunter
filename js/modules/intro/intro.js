@@ -1,15 +1,12 @@
-import {showScreen, createContent} from '../utils.js';
-import Greeting from '../greeting/greeting.js';
-import introString from './intro-template.js';
+import {showScreen} from '../utils.js';
+import greetingScreen from '../greeting/greeting.js';
+import IntroView from './intro-view.js';
 
-function Intro() {
-  const template = `${introString}`;
-  this.element = createContent(template);
-  const button = this.element.querySelector(`.intro__asterisk`);
-  button.addEventListener(`click`, () => {
-    const greeting = new Greeting();
-    showScreen(greeting.element);
-  });
-}
 
-export default Intro;
+const introScreen = new IntroView();
+introScreen.onClick = () => {
+  const greeting = greetingScreen();
+  showScreen(greeting.element);
+};
+
+export default () => introScreen;
