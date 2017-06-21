@@ -24,4 +24,7 @@ export default class GameOneView extends AbstractView {
   onClick() {
 
   }
+
+  countCheckedButtons() {
+  }
 }
