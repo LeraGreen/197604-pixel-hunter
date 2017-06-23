@@ -4,7 +4,7 @@ import StatsView from './stats-view.js';
 
 export default () => {
   const statsScreen = new StatsView();
-  statsScreen.onClick = () => {
+  statsScreen.onBackButtonClick = () => {
     showScreen(greetingScreen());
   };
   return statsScreen;

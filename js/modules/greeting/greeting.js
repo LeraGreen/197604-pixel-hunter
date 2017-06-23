@@ -4,7 +4,7 @@ import GreetingView from './greeting-view.js';
 
 export default () => {
   const greetingScreen = new GreetingView();
-  greetingScreen.onClick = () => {
+  greetingScreen.onNextButtonClick = () => {
     showScreen(rulesScreen());
   };
   return greetingScreen;

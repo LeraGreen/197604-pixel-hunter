@@ -1,22 +1,15 @@
 import {showScreen} from '../utils.js';
-import gameOneScreen from '../gameOne/game-one.js';
 import greetingScreen from '../greeting/greeting.js';
 import RulesView from './rules-view.js';
+import changeLevel from '../game/change-level.js';
 
 export default() => {
   const rulesScreen = new RulesView();
-  rulesScreen.onClick = () => {
+  rulesScreen.onBackButtonClick = () => {
     showScreen(greetingScreen());
   };
   rulesScreen.submitForm = () => {
-    showScreen(gameOneScreen());
-  };
-  rulesScreen.changeDisabled = (button, input) => {
-    if (input.value === ``) {
-      button.setAttribute(`disabled`, `disabled`);
-    } else {
-      button.removeAttribute(`disabled`);
-    }
+    showScreen(changeLevel(`gameOne`));
   };
   return rulesScreen;
 };

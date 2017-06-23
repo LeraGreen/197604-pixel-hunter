@@ -12,11 +12,11 @@ export default class StatsView extends AbstractView {
   bind() {
     const backButton = this.element.querySelector(`.header__back`);
     backButton.addEventListener(`click`, () => {
-      this.onClick();
+      this.onBackButtonClick();
     });
   }
 
-  onClick() {
+  onBackButtonClick() {
 
   }
 }

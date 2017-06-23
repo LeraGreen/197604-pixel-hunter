@@ -17,7 +17,7 @@ export default class GameTwoView extends AbstractView {
     createImg(containers, questions[0]);
     const backButton = this.element.querySelector(`.header__back`);
     backButton.addEventListener(`click`, () => {
-      this.onClick();
+      this.onBackButtonClick();
     });
     for (const answer of answers) {
       answer.addEventListener(`change`, () => {
@@ -26,7 +26,7 @@ export default class GameTwoView extends AbstractView {
     }
   }
 
-  onClick() {
+  onBackButtonClick() {
 
   }
 

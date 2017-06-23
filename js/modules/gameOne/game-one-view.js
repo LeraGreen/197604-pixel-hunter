@@ -17,12 +17,22 @@ export default class GameOneView extends AbstractView {
     createImg(containers, questions[1]);
     this.form.addEventListener(`change`, () => this.countCheckedButtons());
     backButton.addEventListener(`click`, () => {
-      this.onClick();
+      this.onBackButtonClick();
     });
   }
 
-  onClick() {
+  onBackButtonClick() {
 
+  }
+
+  checkRadioButton(radioName) {
+    const radioButtons = this.form.querySelectorAll(`input[name=${radioName}]`);
+    for (const radio of radioButtons) {
+      if (radio.checked) {
+        return true;
+      }
+    }
+    return false;
   }
 
   countCheckedButtons() {

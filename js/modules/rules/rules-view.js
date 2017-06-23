@@ -20,19 +20,23 @@ export default class RulesView extends AbstractView {
       this.submitForm();
     });
     backButton.addEventListener(`click`, () => {
-      this.onClick();
+      this.onBackButtonClick();
     });
   }
 
-  onClick() {
+  onBackButtonClick() {
 
+  }
+
+  changeDisabled(button, input) {
+    if (input.value === ``) {
+      button.setAttribute(`disabled`, `disabled`);
+    } else {
+      button.removeAttribute(`disabled`);
+    }
   }
 
   submitForm() {
-
-  }
-
-  changeDisabled() {
 
   }
 }

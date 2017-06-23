@@ -5,7 +5,7 @@ import IntroView from './intro-view.js';
 
 export default () => {
   const introScreen = new IntroView();
-  introScreen.onClick = () => {
+  introScreen.onNextButtonClick = () => {
     showScreen(greetingScreen());
   };
   return introScreen;

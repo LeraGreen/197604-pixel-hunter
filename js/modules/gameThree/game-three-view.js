@@ -23,7 +23,7 @@ export default class GameThreeView extends AbstractView {
 
     const backButton = this.element.querySelector(`.header__back`);
     backButton.addEventListener(`click`, () => {
-      this.onClick();
+      this.onBackButtonClick();
     });
   }
 
@@ -31,7 +31,7 @@ export default class GameThreeView extends AbstractView {
 
   }
 
-  onClick() {
+  onBackButtonClick() {
 
   }
 }
