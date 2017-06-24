@@ -19,12 +19,11 @@ const AnswerType = {
   WRONG: `wrong`
 };
 
-export const points = {
-  'wrong': 0,
-  'slow': 50,
-  'correct': 100,
-  'fast': 150
-};
+export const points = {};
+points[AnswerType.WRONG] = 0;
+points[AnswerType.SLOW] = 50;
+points[AnswerType.CORRECT] = 100;
+points[AnswerType.FAST] = 150;
 
 export const questions = [
   {
@@ -71,6 +70,111 @@ export const questions = [
         isPhoto: true
       }
     ]
+  },
+  {
+    type: `gameTwo`,
+    mod: `game__content--wide`,
+    question: `Угадай, фото или рисунок`,
+    answers: [
+      {
+        img: `http://i.imgur.com/DKR1HtB.jpg`,
+        isPhoto: true
+      }
+    ]
+  },
+  {
+    type: `gameOne`,
+    mod: ``,
+    question: `Угадайте для каждого изображения фото или рисунок?`,
+    answers: [
+      {
+        img: `http://i.imgur.com/1KegWPz.jpg`,
+        isPhoto: true
+      },
+      {
+        img: `https://i.imgur.com/DiHM5Zb.jpg`,
+        isPhoto: true
+      }
+    ]
+  },
+  {
+    type: `gameThree`,
+    mod: `game__content--triple`,
+    question: `Найдите рисунок среди изображений`,
+    answers: [
+      {
+        img: `https://k42.kn3.net/CF42609C8.jpg`,
+        isPhoto: false
+      },
+      {
+        img: `https://i.imgur.com/DiHM5Zb.jpg`,
+        isPhoto: true
+      },
+      {
+        img: `https://i.imgur.com/DiHM5Zb.jpg`,
+        isPhoto: true
+      }
+    ]
+  },
+  {
+    type: `gameTwo`,
+    mod: `game__content--wide`,
+    question: `Угадай, фото или рисунок`,
+    answers: [
+      {
+        img: `https://k32.kn3.net/5C7060EC5.jpg`,
+        isPhoto: false
+      }
+    ]
+  },
+  {
+    type: `gameOne`,
+    mod: ``,
+    question: `Угадайте для каждого изображения фото или рисунок?`,
+    answers: [
+      {
+        img: `http://i.imgur.com/DKR1HtB.jpg`,
+        isPhoto: true
+      },
+      {
+        img: `https://i.imgur.com/DiHM5Zb.jpg`,
+        isPhoto: true
+      }
+    ]
+  },
+  {
+    type: `gameThree`,
+    mod: `game__content--triple`,
+    question: `Найдите рисунок среди изображений`,
+    answers: [
+      {
+        img: `http://i.imgur.com/DKR1HtB.jpg`,
+        isPhoto: true
+      },
+      {
+        img: `https://i.imgur.com/DiHM5Zb.jpg`,
+        isPhoto: true
+      },
+      {
+        img: `http://i.imgur.com/DKR1HtB.jpg`,
+        isPhoto: true
+      }
+    ]
+  },
+  {
+    type: `gameOne`,
+    mod: ``,
+    question: `Угадайте для каждого изображения фото или рисунок?`,
+    answers: [
+      {
+        img: `http://i.imgur.com/DKR1HtB.jpg`,
+        isPhoto: true
+      },
+      {
+        img: `https://i.imgur.com/DiHM5Zb.jpg`,
+        isPhoto: true
+      }
+    ]
   }
 ];
 
@@ -80,10 +184,6 @@ export const calcLivesPoints = (state) => {
     questionsPoints += 50;
   }
   return questionsPoints;
-};
-
-export const calcAnswerPoints = (question) => {
-  return points[question];
 };
 
 export const checkAnswerType = (time) => {

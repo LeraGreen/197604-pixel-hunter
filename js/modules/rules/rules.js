@@ -1,34 +1,16 @@
-import {showScreen, createContent} from '../utils.js';
-import GameOne from '../gameOne/game-one.js';
-import footer from '../footer/footer-template.js';
-import rulesString from './rules-template.js';
-import Greeting from '../greeting/greeting.js';
+import {showScreen} from '../utils.js';
+import greetingScreen from '../greeting/greeting.js';
+import RulesView from './rules-view.js';
+import changeLevel from '../game/change-level.js';
+import {questions, initialState} from '../../data/data.js';
 
-function Rules() {
-  const template = `${rulesString}${footer}`;
-  this.element = createContent(template);
-  const nameUserInput = this.element.querySelector(`.rules__input`);
-  const button = this.element.querySelector(`.rules__button`);
-  const form = this.element.querySelector(`.rules__form`);
-  nameUserInput.addEventListener(`input`, () => changeDisabled());
-  const submitForm = (event) => {
-    event.preventDefault();
-    const gameOne = new GameOne();
-    showScreen(gameOne.element);
+export default() => {
+  const rulesScreen = new RulesView();
+  rulesScreen.onBackButtonClick = () => {
+    showScreen(greetingScreen());
   };
-  form.addEventListener(`submit`, submitForm);
-  const backButton = this.element.querySelector(`.header__back`);
-  backButton.addEventListener(`click`, () => {
-    const greeting = new Greeting();
-    showScreen(greeting.element);
-  });
-  const changeDisabled = () => {
-    if (nameUserInput.value === ``) {
-      button.setAttribute(`disabled`, `disabled`);
-    } else {
-      button.removeAttribute(`disabled`);
-    }
+  rulesScreen.submitForm = () => {
+    showScreen(changeLevel(questions, initialState.currentQuestion));
   };
-}
-
-export default Rules;
+  return rulesScreen;
+};

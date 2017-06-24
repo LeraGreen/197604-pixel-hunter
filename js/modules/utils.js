@@ -1,7 +1,7 @@
-export const showScreen = (element) => {
+export const showScreen = (screen) => {
   const container = document.querySelector(`.central`);
   container.innerHTML = ``;
-  container.appendChild(element);
+  container.appendChild(screen.element);
 };
 
 export const createContent = (string) => {
