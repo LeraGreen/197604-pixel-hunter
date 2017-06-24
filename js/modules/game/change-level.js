@@ -31,12 +31,6 @@ export default function changeLevel(questions, number) {
       showScreen(statsScreen());
     }
   };
-  game.countCheckedButtons = () => {
-    if (game.checkRadioButton(`question1`) && game.checkRadioButton(`question2`)) {
-      event.preventDefault();
-      game.changeScreen();
-    }
-  };
   return game;
 };
 
