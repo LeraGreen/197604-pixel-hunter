@@ -4,34 +4,38 @@ import GameThreeView from '../gameThree/game-three-view.js';
 import {showScreen} from '../utils.js';
 import greetingScreen from '../greeting/greeting.js';
 import statsScreen from '../stats/stats.js';
+import {initialState, settings} from '../../data/data.js';
 
-export default function changeLevel(screen) {
+export default function changeLevel(questions, number) {
+  let currentQuestion = initialState.currentQuestion;
   let game;
-  switch (screen) {
+  switch (questions[number].type) {
     case `gameOne`:
-      game = new GameOneView();
+      game = new GameOneView(questions[number]);
       game.countCheckedButtons = () => {
         if (game.checkRadioButton(`question1`) && game.checkRadioButton(`question2`)) {
           event.preventDefault();
-          showScreen(changeLevel(`gameTwo`));
+          game.changeScreen();
         }
       };
       break;
     case `gameTwo`:
-      game = new GameTwoView();
-      game.change = () => {
-        showScreen(changeLevel(`gameThree`));
-      };
+      game = new GameTwoView(questions[number]);
       break;
     case `gameThree`:
-      game = new GameThreeView();
-      game.changeScreen = () => {
-        showScreen(statsScreen());
-      };
+      game = new GameThreeView(questions[number]);
       break;
   }
   game.onBackButtonClick = () => {
     showScreen(greetingScreen());
+  };
+  game.changeScreen = () => {
+    if (number < settings.screens - 1) {
+      currentQuestion = ++number;
+      showScreen(changeLevel(questions, currentQuestion));
+    } else {
+      showScreen(statsScreen());
+    }
   };
   return game;
 }
