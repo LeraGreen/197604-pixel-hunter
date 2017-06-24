@@ -12,12 +12,6 @@ export default function changeLevel(questions, number) {
   switch (questions[number].type) {
     case `gameOne`:
       game = new GameOneView(questions[number]);
-      game.countCheckedButtons = () => {
-        if (game.checkRadioButton(`question1`) && game.checkRadioButton(`question2`)) {
-          event.preventDefault();
-          game.changeScreen();
-        }
-      };
       break;
     case `gameTwo`:
       game = new GameTwoView(questions[number]);
@@ -37,7 +31,13 @@ export default function changeLevel(questions, number) {
       showScreen(statsScreen());
     }
   };
+  game.countCheckedButtons = () => {
+    if (game.checkRadioButton(`question1`) && game.checkRadioButton(`question2`)) {
+      event.preventDefault();
+      game.changeScreen();
+    }
+  };
   return game;
-}
+};
 
 
