@@ -1,141 +1,139 @@
 import assert from 'assert';
-import {checkAnswer, checkAnswers, checkAnswerType, calcLivesPoints} from './data.js';
+import {checkAnswer, checkAnswers, checkAnswerType, calcLivesPoints, checkAnswersFromThree} from './data.js';
 
 describe(`right answers`, () => {
 
   describe(`one answer from three`, () => {
     it(`Should return true if received answer equal correct answer`, () => {
       const roundState = {
-        type: `one is right`,
+        screen: `one is right`,
+        find: `paint`,
         questions: [
           {
-            isPhoto: true
+            type: `photo`
           },
           {
-            isPhoto: false
+            type: `paint`
           },
           {
-            isPhoto: true
+            type: `photo`
           },
         ]
       };
       const userAnswer = {
-        num: 1,
-        answer: false
+        num: 1
       };
-      assert.equal(checkAnswer(roundState.questions, userAnswer.num, userAnswer.answer), true);
+      assert.equal(checkAnswersFromThree(roundState.answers, roundState.find, userAnswer.num), true);
     });
 
     it(`Should return false if received answer not equal correct answer`, () => {
       const roundState = {
-        type: `one is right`,
+        screen: `one is right`,
+        find: `paint`,
         questions: [
           {
-            isPhoto: true
+            type: `photo`
           },
           {
-            isPhoto: false
+            type: `paint`
           },
           {
-            isPhoto: true
+            type: `photo`
           },
         ]
       };
       const userAnswer = {
         num: 2,
-        answer: false
       };
-      assert.equal(checkAnswer(roundState.questions, userAnswer.num, userAnswer.answer), false);
+      assert.equal(checkAnswersFromThree(roundState.answers, roundState.find, userAnswer.num), false);
     });
   });
 
   describe(`one picture on screen`, () => {
     it(`Should return true if received answer equal correct answer`, () => {
       const roundState = {
-        type: `one picture`,
-        questions: [
+        screen: `one picture`,
+        answers: [
           {
-            isPhoto: false
+            type: `paint`
           }
         ]
       };
       const userAnswer = {
-        num: 0,
-        answer: false
+        answer: `paint`
       };
-      assert.equal(checkAnswer(roundState.questions, userAnswer.num, userAnswer.answer), true);
+      assert.equal(checkAnswer(roundState.answers, userAnswer.answer), true);
     });
 
     it(`Should return false if received answer not equal correct answer`, () => {
       const roundState = {
-        type: `one picture`,
-        questions: [
+        screen: `one picture`,
+        answers: [
           {
-            isPhoto: false
+            type: `paint`
           }
         ]
       };
       const userAnswer = {
-        num: 0,
-        answer: true
+        answer: `photo`
       };
-      assert.equal(checkAnswer(roundState.questions, userAnswer.num, userAnswer.answer), false);
+      assert.equal(checkAnswer(roundState.answers, userAnswer.answer), false);
     });
   });
 
   describe(`two pictures on screen`, () => {
     it(`Should return true if received answers equal correct answers`, () => {
       const roundState = {
-        type: `two questions`,
-        questions: [
+        screen: `two questions`,
+        answers: [
           {
-            isPhoto: true
+            type: `photo`
           },
           {
-            isPhoto: false
+            type: `paint`
           }
         ]
       };
       const userAnswer = {
-        answer: [true, false]
+        answer: [`photo`, `paint`]
       };
-      assert.equal(checkAnswers(roundState, userAnswer), true);
+      assert.equal(checkAnswers(roundState.answers, userAnswer.answer), true);
     });
 
     it(`Should return false if two received answers not equal correct answers`, () => {
       const roundState = {
-        type: `two questions`,
-        questions: [
+        screen: `two questions`,
+        answers: [
           {
-            isPhoto: true
+            type: `photo`
           },
           {
-            isPhoto: false
+            type: `paint`
           }
         ]
       };
       const userAnswer = {
-        answer: [false, true]
+        answer: [`paint`, `photo`]
       };
-      assert.equal(checkAnswers(roundState, userAnswer), false);
+      assert.equal(checkAnswers(roundState.answers, userAnswer.answer), false);
     });
 
     it(`Should return false if one received answer not equal correct answers`, () => {
       const roundState = {
-        type: `two questions`,
-        questions: [
+        screen: `two questions`,
+        answers: [
           {
-            isPhoto: true
+            type: `photo`
           },
           {
-            isPhoto: false
+            type: `paint`
           }
         ]
       };
       const userAnswer = {
-        answer: [false, false]
+        answer: [`paint`, `paint`]
       };
-      assert.equal(checkAnswers(roundState, userAnswer), false);
+      assert.equal(checkAnswers(roundState.answers, userAnswer.answer), false);
     });
   });
 });

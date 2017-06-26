@@ -26,11 +26,19 @@ export default class GameTwoView extends AbstractView {
     for (const answer of answers) {
       answer.addEventListener(`change`, () => {
         this.changeScreen();
+        const answerValue = answer.value;
+        if (answer) {
+          this.onAnswer(answerValue, this.question);
+        }
       });
     }
   }
 
   onBackButtonClick() {
+
+  }
+
+  onAnswer(answer) {
 
   }
 

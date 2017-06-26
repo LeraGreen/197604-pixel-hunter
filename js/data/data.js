@@ -33,7 +33,7 @@ export const questions = [
     answers: [
       {
         img: `https://k42.kn3.net/CF42609C8.jpg`,
-        isPhoto: false
+        type: `paint`
       }
     ]
   },
@@ -44,11 +44,11 @@ export const questions = [
     answers: [
       {
         img: `http://i.imgur.com/DKR1HtB.jpg`,
-        isPhoto: true
+        type: `photo`
       },
       {
         img: `https://i.imgur.com/DiHM5Zb.jpg`,
-        isPhoto: true
+        type: `photo`
       }
     ]
   },
@@ -56,18 +56,19 @@ export const questions = [
     type: `gameThree`,
     mod: `game__content--triple`,
     question: `Найдите рисунок среди изображений`,
+    searchType: `paint`,
     answers: [
       {
         img: `http://i.imgur.com/DKR1HtB.jpg`,
-        isPhoto: true
+        type: `photo`
       },
       {
         img: `https://i.imgur.com/DiHM5Zb.jpg`,
-        isPhoto: true
+        type: `photo`
       },
       {
         img: `https://i.imgur.com/DiHM5Zb.jpg`,
-        isPhoto: true
+        type: `photo`
       }
     ]
   },
@@ -78,7 +79,7 @@ export const questions = [
     answers: [
       {
         img: `http://i.imgur.com/DKR1HtB.jpg`,
-        isPhoto: true
+        type: `photo`
       }
     ]
   },
@@ -89,30 +90,31 @@ export const questions = [
     answers: [
       {
         img: `http://i.imgur.com/1KegWPz.jpg`,
-        isPhoto: true
+        type: `photo`
       },
       {
         img: `https://i.imgur.com/DiHM5Zb.jpg`,
-        isPhoto: true
+        type: `photo`
       }
     ]
   },
   {
     type: `gameThree`,
     mod: `game__content--triple`,
-    question: `Найдите рисунок среди изображений`,
+    question: `Найдите фото среди изображений`,
+    searchType: `photo`,
     answers: [
       {
         img: `https://k42.kn3.net/CF42609C8.jpg`,
-        isPhoto: false
+        type: `paint`
       },
       {
         img: `https://i.imgur.com/DiHM5Zb.jpg`,
-        isPhoto: true
+        type: `photo`
       },
       {
         img: `https://i.imgur.com/DiHM5Zb.jpg`,
-        isPhoto: true
+        type: `photo`
       }
     ]
   },
@@ -123,7 +125,7 @@ export const questions = [
     answers: [
       {
         img: `https://k32.kn3.net/5C7060EC5.jpg`,
-        isPhoto: false
+        type: `paint`
       }
     ]
   },
@@ -134,11 +136,11 @@ export const questions = [
     answers: [
       {
         img: `http://i.imgur.com/DKR1HtB.jpg`,
-        isPhoto: true
+        type: `photo`
       },
       {
         img: `https://i.imgur.com/DiHM5Zb.jpg`,
-        isPhoto: true
+        type: `photo`
       }
     ]
   },
@@ -146,18 +148,19 @@ export const questions = [
     type: `gameThree`,
     mod: `game__content--triple`,
     question: `Найдите рисунок среди изображений`,
+    searchType: `paint`,
     answers: [
       {
         img: `http://i.imgur.com/DKR1HtB.jpg`,
-        isPhoto: true
+        type: `photo`
       },
       {
         img: `https://i.imgur.com/DiHM5Zb.jpg`,
-        isPhoto: true
+        type: `photo`
       },
       {
         img: `http://i.imgur.com/DKR1HtB.jpg`,
-        isPhoto: true
+        type: `photo`
       }
     ]
   },
@@ -168,11 +171,11 @@ export const questions = [
     answers: [
       {
         img: `http://i.imgur.com/DKR1HtB.jpg`,
-        isPhoto: true
+        type: `photo`
       },
       {
         img: `https://i.imgur.com/DiHM5Zb.jpg`,
-        isPhoto: true
+        type: `photo`
       }
     ]
   }
@@ -202,13 +205,17 @@ export const checkAnswerType = (time) => {
   return AnswerType.WRONG;
 };
 
-export const checkAnswer = (questionsList, number, answer) => {
-  return (questionsList[number].isPhoto === answer);
+export const checkAnswer = (questionsList, answer) => {
+  return (questionsList[0].type === answer);
+};
+
+export const checkAnswersFromThree = (questionsList, findType, answerNum) => {
+  return (findType === questionsList[answerNum].type);
 };
 
 export const checkAnswers = (state, answer) => {
-  for (let i = 0; i < state.questions.length; i++) {
-    if (answer.answer[i] !== state.questions[i].isPhoto) {
+  for (let i = 0; i < state.length; i++) {
+    if (answer[i] !== state[i].type) {
       return false;
     }
   }

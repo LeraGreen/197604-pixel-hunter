@@ -16,8 +16,9 @@ export default class GameThreeView extends AbstractView {
 
   bind() {
     const gameOptions = this.element.querySelectorAll(`.game__option`);
-    for (const option of gameOptions) {
-      option.addEventListener(`click`, () => {
+    for (let i = 0; i < gameOptions.length; i++) {
+      gameOptions[i].addEventListener(`click`, () => {
+        this.onAnswer(i, this.question);
         this.changeScreen();
       });
     }

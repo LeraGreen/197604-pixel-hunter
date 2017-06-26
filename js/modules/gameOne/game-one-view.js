@@ -9,6 +9,7 @@ export default class GameOneView extends AbstractView {
   constructor(question) {
     super();
     this.question = question;
+    this.answers = [];
   }
   get template() {
     return `${header(initialState)}${gameOneString(this.question)}${footer}`.trim();
@@ -33,6 +34,7 @@ export default class GameOneView extends AbstractView {
     const radioButtons = this.form.querySelectorAll(`input[name=${radioName}]`);
     for (const radio of radioButtons) {
       if (radio.checked) {
+        this.answers.push(radio.value);
         return true;
       }
     }
@@ -42,6 +44,7 @@ export default class GameOneView extends AbstractView {
   countCheckedButtons() {
     if (this.checkRadioButton(`question1`) && this.checkRadioButton(`question2`)) {
       event.preventDefault();
+      this.onAnswer(this.answers, this.question);
       this.changeScreen();
     }
   }
