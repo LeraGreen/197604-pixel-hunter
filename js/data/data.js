@@ -1,5 +1,5 @@
 export const initialState = {
-  lives: 2,
+  lives: 3,
   time: 0,
   nameUser: ``,
   currentQuestion: 0,
@@ -8,6 +8,7 @@ export const initialState = {
 
 export const settings = {
   maxLives: 3,
+  minLives: 0,
   screens: 10,
   timeToAnswer: 30
 };
@@ -190,19 +191,21 @@ export const calcLivesPoints = (state) => {
 };
 
 export const checkAnswerType = (time) => {
+  let answer;
   if (time === -1) {
-    return AnswerType.WRONG;
+    answer = AnswerType.WRONG;
   }
   if (time !== -1 && time < 10) {
-    return AnswerType.FAST;
+    answer = AnswerType.FAST;
   }
   if (time > 20 && time <= 30) {
-    return AnswerType.SLOW;
+    answer = AnswerType.SLOW;
   }
   if (time >= 10 && time <= 20) {
-    return AnswerType.CORRECT;
+    answer = AnswerType.CORRECT;
   }
-  return AnswerType.WRONG;
+  console.log(answer);
+  return answer;
 };
 
 export const checkAnswer = (questionsList, answer) => {

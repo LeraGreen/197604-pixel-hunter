@@ -3,16 +3,17 @@ import header from '../header/header-template.js';
 import footer from '../footer/footer-template.js';
 import gameOneString from './game-one-template.js';
 import {createImg} from '../utils.js';
-import {initialState} from '../../data/data.js';
+// import {initialState} from '../../data/data.js';
 
 export default class GameOneView extends AbstractView {
-  constructor(question) {
+  constructor(question, initialState) {
     super();
     this.question = question;
     this.answers = [];
+    this.initialState = initialState;
   }
   get template() {
-    return `${header(initialState)}${gameOneString(this.question)}${footer}`.trim();
+    return `${header(this.initialState)}${gameOneString(this.question)}${footer}`.trim();
   }
 
   bind() {
@@ -44,7 +45,7 @@ export default class GameOneView extends AbstractView {
   countCheckedButtons() {
     if (this.checkRadioButton(`question1`) && this.checkRadioButton(`question2`)) {
       event.preventDefault();
-      // this.onAnswer(this.answers, this.question);
+      this.onAnswer(this.answers, this.question);
       this.changeScreen();
     }
   }
