@@ -18,6 +18,7 @@ export default class GameTwoView extends AbstractView {
   bind() {
     const answers = this.element.querySelectorAll(`.game__answer input`);
     const containers = this.element.querySelectorAll(`.game__option`);
+    this.timerContainer = this.element.querySelector(`.game__timer`);
     createImg(containers, this.question);
     const backButton = this.element.querySelector(`.header__back`);
     backButton.addEventListener(`click`, () => {
@@ -44,5 +45,13 @@ export default class GameTwoView extends AbstractView {
 
   change() {
 
+  }
+
+  updateTimer(time) {
+    let timerContainer = this.element.querySelector(`.game__timer`);
+    if (timerContainer === null) {
+      timerContainer = document.querySelector(`.game__timer`);
+    }
+    timerContainer.textContent = time;
   }
 }

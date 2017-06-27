@@ -8,29 +8,53 @@ import {initialState, settings, checkAnswers, checkAnswer, checkAnswersFromThree
 import introScreen from '../intro/intro.js';
 
 export default class GameScreen {
-  constructor(state) {
+  constructor(questions, state) {
+    this.questions = questions;
     this.state = state;
+    this.currentQuestion = initialState.currentQuestion;
+  }
+
+  tickTimer() {
+    this.state = Object.assign({}, this.state, {
+      time: this.state.time + 1
+    });
+    this.view.updateTimer(this.state.time);
+    if (this.state.time === 30) {
+      this.stopTimer();
+    }
+
+    this.timeout = setTimeout(() => this.tickTimer(), 1000);
+  }
+
+  stopTimer() {
+    clearTimeout(this.timeout);
+    this.state = Object.assign({}, this.state, {
+      time: 0
+    });
+    this.view.changeScreen();
   }
 
   changeLevel(questions, number) {
     this.number = number;
     this.questions = questions;
-    this.currentQuestion = initialState.currentQuestion;
     switch (questions[number].type) {
       case `gameOne`:
-        this.game = new GameOneView(questions[number]);
+        this.view = new GameOneView(questions[number]);
+        this.tickTimer();
         break;
       case `gameTwo`:
-        this.game = new GameTwoView(questions[number]);
+        this.view = new GameTwoView(questions[number]);
+        this.tickTimer();
         break;
       case `gameThree`:
-        this.game = new GameThreeView(questions[number]);
+        this.view = new GameThreeView(questions[number]);
+        this.tickTimer();
         break;
     }
-    this.game.onBackButtonClick = () => {
+    this.view.onBackButtonClick = () => {
       showScreen(greetingScreen());
     };
-    this.game.changeScreen = () => {
+    this.view.changeScreen = () => {
       if (this.number < settings.screens - 1) {
         this.currentQuestion = ++this.number;
         showScreen(this.changeLevel(this.questions, this.currentQuestion));
@@ -38,7 +62,7 @@ export default class GameScreen {
         showScreen(statsScreen());
       }
     };
-    return this.game;
+    return this.view;
   }
 
 

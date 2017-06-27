@@ -1,5 +1,4 @@
 export const showScreen = (screen) => {
-  debugger;
   const container = document.querySelector(`.central`);
   container.innerHTML = ``;
   container.appendChild(screen.element);

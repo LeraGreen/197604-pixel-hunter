@@ -10,7 +10,7 @@ export default() => {
     showScreen(greetingScreen());
   };
   rulesScreen.submitForm = () => {
-    const gameScreen = new GameScreen(questions);
+    const gameScreen = new GameScreen(questions, initialState);
     showScreen(gameScreen.changeLevel(questions, initialState.currentQuestion));
   };
   return rulesScreen;

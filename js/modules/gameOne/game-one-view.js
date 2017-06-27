@@ -48,4 +48,12 @@ export default class GameOneView extends AbstractView {
       this.changeScreen();
     }
   }
+
+  updateTimer(time) {
+    let timerContainer = this.element.querySelector(`.game__timer`);
+    if (timerContainer === null) {
+      timerContainer = document.querySelector(`.game__timer`);
+    }
+    timerContainer.textContent = time;
+  }
 }
