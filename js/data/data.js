@@ -204,7 +204,6 @@ export const checkAnswerType = (time) => {
   if (time >= 10 && time <= 20) {
     answer = AnswerType.CORRECT;
   }
-  console.log(answer);
   return answer;
 };
 
