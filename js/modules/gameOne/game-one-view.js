@@ -44,7 +44,7 @@ export default class GameOneView extends AbstractView {
   countCheckedButtons() {
     if (this.checkRadioButton(`question1`) && this.checkRadioButton(`question2`)) {
       event.preventDefault();
-      this.onAnswer(this.answers, this.question);
+      // this.onAnswer(this.answers, this.question);
       this.changeScreen();
     }
   }

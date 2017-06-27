@@ -7,8 +7,8 @@ describe(`right answers`, () => {
     it(`Should return true if received answer equal correct answer`, () => {
       const roundState = {
         screen: `one is right`,
-        find: `paint`,
-        questions: [
+        searchType: `paint`,
+        answers: [
           {
             type: `photo`
           },
@@ -23,14 +23,14 @@ describe(`right answers`, () => {
       const userAnswer = {
         num: 1
       };
-      assert.equal(checkAnswersFromThree(roundState.answers, roundState.find, userAnswer.num), true);
+      assert.equal(checkAnswersFromThree(roundState.answers, roundState.searchType, userAnswer.num), true);
     });
 
     it(`Should return false if received answer not equal correct answer`, () => {
       const roundState = {
         screen: `one is right`,
-        find: `paint`,
-        questions: [
+        searchType: `paint`,
+        answers: [
           {
             type: `photo`
           },
@@ -45,7 +45,7 @@ describe(`right answers`, () => {
       const userAnswer = {
         num: 2,
       };
-      assert.equal(checkAnswersFromThree(roundState.answers, roundState.find, userAnswer.num), false);
+      assert.equal(checkAnswersFromThree(roundState.answers, roundState.searchType, userAnswer.num), false);
     });
   });
 
