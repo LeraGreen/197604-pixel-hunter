@@ -17,9 +17,10 @@ export default class GameThreeView extends AbstractView {
 
   bind() {
     const gameOptions = this.element.querySelectorAll(`.game__option`);
+    this.timerContainer = this.element.querySelector(`.game__timer`);
     for (let i = 0; i < gameOptions.length; i++) {
       gameOptions[i].addEventListener(`click`, () => {
-        this.onAnswer(i, this.question);
+        this.onAnswer(this.question, i);
         this.changeScreen();
       });
     }
@@ -41,12 +42,12 @@ export default class GameThreeView extends AbstractView {
 
   }
 
-  updateTimer(time) {
+  updateTimer(state) {
     let timerContainer = this.element.querySelector(`.game__timer`);
     if (timerContainer === null) {
       timerContainer = document.querySelector(`.game__timer`);
     }
-    timerContainer.textContent = time;
+    timerContainer.textContent = state.time;
   }
 }
 

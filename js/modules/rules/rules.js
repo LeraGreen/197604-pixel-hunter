@@ -4,7 +4,7 @@ import RulesView from './rules-view.js';
 import GameScreen from '../game/game-screen.js';
 import {questions, initialState} from '../../data/data.js';
 
-export default() => {
+export default () => {
   const rulesScreen = new RulesView();
   rulesScreen.onBackButtonClick = () => {
     showScreen(greetingScreen());

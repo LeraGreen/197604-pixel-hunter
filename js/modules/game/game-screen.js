@@ -4,7 +4,7 @@ import GameThreeView from '../gameThree/game-three-view.js';
 import {showScreen} from '../utils.js';
 import greetingScreen from '../greeting/greeting.js';
 import statsScreen from '../stats/stats.js';
-import {initialState, settings, checkAnswers, checkAnswer, checkAnswersFromThree, checkAnswerType} from '../../data/data.js';
+import {initialState, settings, checkAnswer, checkAnswerType, tickTimer, clearTimer, updateLives, ScreenType} from '../../data/data.js';
 
 export default class GameScreen {
   constructor(questions, state) {
@@ -14,13 +14,12 @@ export default class GameScreen {
   }
 
   tickTimer() {
-    this.state = Object.assign({}, this.state, {
-      time: this.state.time + 1
-    });
-    this.view.updateTimer(this.state.time);
+    this.state = tickTimer(this.state);
+    this.view.updateTimer(this.state);
 
-    if (this.state.time === 10) {
+    if (this.state.time === settings.timeToAnswer) {
       this.view.onAnswer(false, this.questions[this.currentQuestion]);
+      this.deleteLives();
       this.view.changeScreen();
       return;
     }
@@ -30,28 +29,24 @@ export default class GameScreen {
 
   stopTimer() {
     clearTimeout(this.timeout);
-    this.state = Object.assign({}, this.state, {
-      time: 0
-    });
+    this.state = clearTimer(this.state);
   }
 
   changeLevel(questions, number) {
     this.number = number;
     this.questions = questions;
     switch (questions[number].type) {
-      case `gameOne`:
+      case ScreenType.ONE:
         this.view = new GameOneView(questions[number], this.state);
-        this.tickTimer();
         break;
-      case `gameTwo`:
+      case ScreenType.TWO:
         this.view = new GameTwoView(questions[number], this.state);
-        this.tickTimer();
         break;
-      case `gameThree`:
+      case ScreenType.THREE:
         this.view = new GameThreeView(questions[number], this.state);
-        this.tickTimer();
         break;
     }
+    this.tickTimer();
 
     this.view.onBackButtonClick = () => {
       this.stopTimer();
@@ -69,18 +64,8 @@ export default class GameScreen {
       }
     };
 
-    this.view.onAnswer = (answer, question) => {
-      let result;
-      switch (question.type) {
-        case `gameTwo`:
-          result = checkAnswer(question.answers, answer);
-          break;
-        case `gameOne`:
-          result = checkAnswers(question.answers, answer);
-          break;
-        case `gameThree`:
-          result = checkAnswersFromThree(question.answers, question.searchType, answer);
-      }
+    this.view.onAnswer = (question, answer) => {
+      const result = checkAnswer(question, answer);
       this.checkPoints(result);
     };
 
@@ -104,11 +89,11 @@ export default class GameScreen {
   deleteLives() {
     if (this.state.lives === 0) {
       this.stopTimer();
+      debugger;
       showScreen(statsScreen());
+      return;
     }
-    this.state = Object.assign({}, this.state, {
-      lives: this.state.lives - 1
-    });
+    this.state = updateLives(this.state);
   }
 }
 

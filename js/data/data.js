@@ -20,6 +20,12 @@ const AnswerType = {
   WRONG: `wrong`
 };
 
+export const ScreenType = {
+  ONE: `gameOne`,
+  TWO: `gameTwo`,
+  THREE: `gameThree`
+};
+
 export const points = {};
 points[AnswerType.WRONG] = 0;
 points[AnswerType.SLOW] = 50;
@@ -157,7 +163,7 @@ export const questions = [
       },
       {
         img: `https://i.imgur.com/DiHM5Zb.jpg`,
-        type: `photo`
+        type: `paint`
       },
       {
         img: `http://i.imgur.com/DKR1HtB.jpg`,
@@ -182,9 +188,9 @@ export const questions = [
   }
 ];
 
-export const calcLivesPoints = (state) => {
+export const calcLivesPoints = (lives) => {
   let questionsPoints = 0;
-  for (let i = state.lives; i > 0; i--) {
+  for (let i = lives; i > 0; i--) {
     questionsPoints += 50;
   }
   return questionsPoints;
@@ -192,10 +198,10 @@ export const calcLivesPoints = (state) => {
 
 export const checkAnswerType = (time) => {
   let answer;
-  if (time === -1) {
+  if (time < 0) {
     answer = AnswerType.WRONG;
   }
-  if (time !== -1 && time < 10) {
+  if (time >= 0 && time < 10) {
     answer = AnswerType.FAST;
   }
   if (time > 20 && time <= 30) {
@@ -204,24 +210,63 @@ export const checkAnswerType = (time) => {
   if (time >= 10 && time <= 20) {
     answer = AnswerType.CORRECT;
   }
+  if (time > settings.timeToAnswer) {
+    throw new RangeError(`Can't set time more then timeToAnswer`);
+  }
   return answer;
 };
 
-export const checkAnswer = (questionsList, answer) => {
-  return (questionsList[0].type === answer);
-};
 
-export const checkAnswersFromThree = (questionsList, findType, answerNum) => {
-  return (findType === questionsList[answerNum].type);
-};
-
-export const checkAnswers = (state, answer) => {
-  for (let i = 0; i < state.length; i++) {
-    if (answer[i] !== state[i].type) {
-      return false;
-    }
+export const checkAnswer = (state, answer) => {
+  let result;
+  switch (state.type) {
+    case ScreenType.ONE:
+      for (let i = 0; i < state.answers.length; i++) {
+        if (answer[i] !== state.answers[i].type) {
+          return (result = false);
+        }
+      }
+      return (result = true);
+    case ScreenType.TWO:
+      result = (state.answers[0].type === answer);
+      break;
+    case ScreenType.THREE:
+      result = (state.searchType === state.answers[answer].type);
   }
-  return true;
+  return result;
+};
+
+export const tickTimer = (state) => {
+  if (state.time > settings.timeToAnswer) {
+    throw new RangeError(`Can't set time more then timeToAnswer`);
+  }
+
+  state = Object.assign({}, state, {
+    time: state.time + 1
+  });
+  return state;
+};
+
+export const clearTimer = (state) => {
+  state = Object.assign({}, state, {
+    time: 0
+  });
+  return state;
+};
+
+export const updateLives = (state) => {
+  if (state.lives === 0) {
+    return state;
+  }
+
+  if (state.lives < 0) {
+    throw new RangeError(`Can't set negative lives`);
+  }
+
+  state = Object.assign({}, state, {
+    lives: state.lives - 1
+  });
+  return state;
 };
 
 
