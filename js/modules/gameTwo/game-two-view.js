@@ -1,6 +1,5 @@
 import AbstractView from '../../view.js';
 import {createImg} from '../utils.js';
-// import {initialState} from '../../data/data.js';
 import header from '../header/header-template.js';
 import footer from '../footer/footer-template.js';
 import gameTwoString from './game-two-template.js';
@@ -12,6 +11,7 @@ export default class GameTwoView extends AbstractView {
     this.initialState = initialState;
     this.question = question;
   }
+
   get template() {
     return `${header(this.initialState)}${gameTwoString(this.question)}${footer}`.trim();
   }
@@ -20,7 +20,6 @@ export default class GameTwoView extends AbstractView {
     const answers = this.element.querySelectorAll(`.game__answer input`);
     const containers = this.element.querySelectorAll(`.game__option`);
     this.timerContainer = this.element.querySelector(`.game__timer`);
-    console.log(this.timerContainer);
     createImg(containers, this.question);
     const backButton = this.element.querySelector(`.header__back`);
     backButton.addEventListener(`click`, () => {
@@ -32,8 +31,6 @@ export default class GameTwoView extends AbstractView {
         if (answer) {
           this.onAnswer(this.question, answerValue);
         }
-
-        this.changeScreen();
       });
     }
   }
@@ -51,10 +48,8 @@ export default class GameTwoView extends AbstractView {
   }
 
   updateTimer(state) {
-    let timerContainer = this.element.querySelector(`.game__timer`);
-    if (timerContainer === null) {
-      timerContainer = document.querySelector(`.game__timer`);
+    if (this.element) {
+      this.timerContainer.textContent = state.time;
     }
-    timerContainer.textContent = state.time;
   }
 }

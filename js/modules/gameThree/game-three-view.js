@@ -3,7 +3,6 @@ import header from '../header/header-template.js';
 import footer from '../footer/footer-template.js';
 import {createImg} from '../utils.js';
 import gameThreeString from './game-three-template.js';
-// import {initialState} from '../../data/data.js';
 
 export default class GameThreeView extends AbstractView {
   constructor(question, initialState) {
@@ -21,7 +20,6 @@ export default class GameThreeView extends AbstractView {
     for (let i = 0; i < gameOptions.length; i++) {
       gameOptions[i].addEventListener(`click`, () => {
         this.onAnswer(this.question, i);
-        this.changeScreen();
       });
     }
 
@@ -43,11 +41,9 @@ export default class GameThreeView extends AbstractView {
   }
 
   updateTimer(state) {
-    let timerContainer = this.element.querySelector(`.game__timer`);
-    if (timerContainer === null) {
-      timerContainer = document.querySelector(`.game__timer`);
+    if (this.element) {
+      this.timerContainer.textContent = state.time;
     }
-    timerContainer.textContent = state.time;
   }
 }
 

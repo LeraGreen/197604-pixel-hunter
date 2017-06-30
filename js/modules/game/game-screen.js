@@ -14,8 +14,8 @@ export default class GameScreen {
   }
 
   tickTimer() {
-    this.state = tickTimer(this.state);
     this.view.updateTimer(this.state);
+    this.state = tickTimer(this.state);
 
     if (this.state.time === settings.timeToAnswer) {
       this.view.onAnswer(false, this.questions[this.currentQuestion]);
@@ -56,7 +56,7 @@ export default class GameScreen {
     this.view.changeScreen = () => {
       this.stopTimer();
 
-      if (this.number < settings.screens - 1) {
+      if (this.number < settings.screens - 1 && this.state.lives !== 0) {
         this.currentQuestion = ++this.number;
         showScreen(this.changeLevel(this.questions, this.currentQuestion));
       } else {
@@ -84,13 +84,11 @@ export default class GameScreen {
     if (answerType === `wrong`) {
       this.deleteLives();
     }
+    this.view.changeScreen();
   }
 
   deleteLives() {
     if (this.state.lives === 0) {
-      this.stopTimer();
-      debugger;
-      showScreen(statsScreen());
       return;
     }
     this.state = updateLives(this.state);

@@ -3,7 +3,6 @@ import header from '../header/header-template.js';
 import footer from '../footer/footer-template.js';
 import gameOneString from './game-one-template.js';
 import {createImg} from '../utils.js';
-import {initialState} from '../../data/data.js';
 
 export default class GameOneView extends AbstractView {
   constructor(question, initialState) {
@@ -47,15 +46,12 @@ export default class GameOneView extends AbstractView {
     if (this.checkRadioButton(`question1`) && this.checkRadioButton(`question2`)) {
       event.preventDefault();
       this.onAnswer(this.question, this.answers);
-      this.changeScreen();
     }
   }
 
   updateTimer(state) {
-    let timerContainer = this.element.querySelector(`.game__timer`);
-    if (timerContainer === null) {
-      timerContainer = document.querySelector(`.game__timer`);
+    if (this.element) {
+      this.timerContainer.textContent = state.time;
     }
-    timerContainer.textContent = state.time;
   }
 }
