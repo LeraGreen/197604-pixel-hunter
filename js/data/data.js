@@ -1,9 +1,14 @@
 export const initialState = {
   lives: 3,
-  time: 0,
+  time: 30,
   nameUser: ``,
   currentQuestion: 0,
-  answers: []
+  answers: [],
+  allPoints: 0,
+  correctAnswerPoints: 0,
+  wrong: 0,
+  fast: 0,
+  slow: 0
 };
 
 export const settings = {
@@ -188,12 +193,33 @@ export const questions = [
   }
 ];
 
-export const calcLivesPoints = (lives) => {
-  let questionsPoints = 0;
-  for (let i = lives; i > 0; i--) {
-    questionsPoints += 50;
+export const makeArrOfCorrectAnswers = (state) => {
+  return state.answers.filter(function (item) {
+    return item !== AnswerType.WRONG;
+  });
+};
+
+export const calcCorrectAnswersPoints = (state, arr) => {
+  state.correctAnswerPoints = arr.length * 100;
+};
+
+export const calcAllPoints = (state) => {
+  const answers = state.answers;
+  let stats = 0;
+  for (let answer of answers) {
+    stats = stats + points[answer];
   }
-  return questionsPoints;
+  stats = stats + calcItemPoints(state.lives);
+  state.allPoints = stats;
+  return state;
+};
+
+export const calcItemPoints = (num) => {
+  let itemPoints = 0;
+  for (let i = num; i > 0; i--) {
+    itemPoints += 50;
+  }
+  return itemPoints;
 };
 
 export const checkAnswerType = (time) => {
@@ -237,19 +263,19 @@ export const checkAnswer = (state, answer) => {
 };
 
 export const tickTimer = (state) => {
-  if (state.time > settings.timeToAnswer) {
+  if (state.time < 0) {
     throw new RangeError(`Can't set time more then timeToAnswer`);
   }
 
   state = Object.assign({}, state, {
-    time: state.time + 1
+    time: state.time - 1
   });
   return state;
 };
 
 export const clearTimer = (state) => {
   state = Object.assign({}, state, {
-    time: 0
+    time: settings.timeToAnswer
   });
   return state;
 };
@@ -266,6 +292,18 @@ export const updateLives = (state) => {
   state = Object.assign({}, state, {
     lives: state.lives - 1
   });
+  return state;
+};
+
+export const calcAnswers = (state, answerType) => {
+  const answers = state.answers;
+  let num = 0;
+  for (const answer of answers) {
+    if (answer === answerType) {
+      num += 1;
+    }
+  }
+  state[answerType] = num;
   return state;
 };
 

@@ -1,5 +1,5 @@
 import assert from 'assert';
-import {checkAnswer, checkAnswerType, calcLivesPoints, tickTimer, clearTimer, updateLives} from './data.js';
+import {checkAnswer, checkAnswerType, calcItemPoints, tickTimer, clearTimer, updateLives, calcAllPoints, makeArrOfCorrectAnswers} from './data.js';
 
 describe(`right answers`, () => {
 
@@ -139,43 +139,42 @@ describe(`type of questions`, () => {
   });
 });
 
-describe(`points from lives`, () => {
-  it(`Should return 50 if one life is left`, () => {
-    assert.equal(calcLivesPoints(1), 50);
+describe(`answers`, () => {
+  it(`Should return array without wrong answers`, () => {
+    const initialState = {
+      answers: [`wrong`, `fast`, `fast`, `slow`]
+    };
+    assert.deepEqual(makeArrOfCorrectAnswers(initialState), [`fast`, `fast`, `slow`]);
   });
 
-  it(`Should return 100 if two lives are left`, () => {
-    assert.equal(calcLivesPoints(2), 100);
-  });
-
-  it(`Should return 150 if three lives are left`, () => {
-    assert.equal(calcLivesPoints(3), 150);
-  });
-
-  it(`Should return 0 if 0 life is left`, () => {
-    assert.equal(calcLivesPoints(0), 0);
+  it(`Should return empty array`, () => {
+    const initialState = {
+      answers: [`wrong`, `wrong`, `wrong`]
+    };
+    assert.deepEqual(makeArrOfCorrectAnswers(initialState), []);
   });
 });
 
+
 describe(`timer`, () => {
   describe(`update timer`, () => {
-    it(`Should return 2 in time property`, () => {
+    it(`Should return 0 in time property`, () => {
       const initialState = {
         time: 1
       };
-      assert.equal(tickTimer(initialState).time, 2);
+      assert.equal(tickTimer(initialState).time, 0);
     });
 
-    it(`Should return 10 in time property`, () => {
+    it(`Should return 8 in time property`, () => {
       const initialState = {
         time: 9
       };
-      assert.equal(tickTimer(initialState).time, 10);
+      assert.equal(tickTimer(initialState).time, 8);
     });
 
     it(`should fail on negative values`, () => {
       const initialState = {
-        time: 32
+        time: -1
       };
       const setWrongTime = () => {
         tickTimer(initialState);
@@ -186,18 +185,18 @@ describe(`timer`, () => {
   });
 
   describe(`clear timer`, () => {
-    it(`Should return 0 in time property`, () => {
+    it(`Should return 30 in time property`, () => {
       const initialState = {
         time: 20
       };
-      assert.equal(clearTimer(initialState).time, 0);
+      assert.equal(clearTimer(initialState).time, 30);
     });
 
-    it(`Should return 0 in time property`, () => {
+    it(`Should return 30 in time property`, () => {
       const initialState = {
         time: 10
       };
-      assert.equal(clearTimer(initialState).time, 0);
+      assert.equal(clearTimer(initialState).time, 30);
     });
   });
 });
@@ -227,6 +226,55 @@ describe(`lives`, () => {
       };
 
       assert.throws(setNegativeLives);
+    });
+  });
+});
+
+describe(`points`, () => {
+  describe(`points from lives`, () => {
+    it(`Should return 50 if one life is left`, () => {
+      assert.equal(calcItemPoints(1), 50);
+    });
+
+    it(`Should return 100 if two lives are left`, () => {
+      assert.equal(calcItemPoints(2), 100);
+    });
+
+    it(`Should return 150 if three lives are left`, () => {
+      assert.equal(calcItemPoints(3), 150);
+    });
+
+    it(`Should return 0 if 0 life is left`, () => {
+      assert.equal(calcItemPoints(0), 0);
+    });
+  });
+
+  describe(`points from answers`, () => {
+    it(`Should return 500 points`, () => {
+      const initialState = {
+        lives: 3,
+        answers: [`wrong`, `fast`, `fast`, `slow`],
+        allPoints: 0
+      };
+      assert.equal(calcAllPoints(initialState).allPoints, 500);
+    });
+
+    it(`Should return 200 points`, () => {
+      const initialState = {
+        lives: 0,
+        answers: [`wrong`, `wrong`, `fast`, `slow`],
+        allPoints: 0
+      };
+      assert.equal(calcAllPoints(initialState).allPoints, 200);
+    });
+
+    it(`Should return 0 points`, () => {
+      const initialState = {
+        lives: 0,
+        answers: [`wrong`, `wrong`, `wrong`],
+        allPoints: 0
+      };
+      assert.equal(calcAllPoints(initialState).allPoints, 0);
     });
   });
 });

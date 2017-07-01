@@ -5,8 +5,13 @@ import statsString from './stats-template.js';
 import {initialState} from '../../data/data.js';
 
 export default class StatsView extends AbstractView {
+  constructor(state) {
+    super();
+    this.state = state;
+  }
+
   get template() {
-    return `${header(initialState)}${statsString}${footer}`.trim();
+    return `${header(initialState)}${statsString(this.state)}${footer}`.trim();
   }
 
   bind() {

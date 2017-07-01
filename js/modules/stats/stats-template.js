@@ -1,4 +1,9 @@
-export default `<div class="result">
+import {calcItemPoints} from '../../data/data.js';
+
+export default statsString;
+
+const statsString = (state) => {
+  return `<div class="result">
     <h1>Победа!</h1>
     <table class="result__table">
       <tr>
@@ -18,31 +23,31 @@ export default `<div class="result">
           </ul>
         </td>
         <td class="result__points">×&nbsp;100</td>
-        <td class="result__total">900</td>
+        <td class="result__total">${state.correctAnswerPoints}</td>
       </tr>
-      <tr>
+      ${state.fast === 0 ? `` : `<tr>
         <td></td>
         <td class="result__extra">Бонус за скорость:</td>
-        <td class="result__extra">1&nbsp;<span class="stats__result stats__result--fast"></span></td>
+        <td class="result__extra">${state.fast}&nbsp;<span class="stats__result stats__result--fast"></span></td>
         <td class="result__points">×&nbsp;50</td>
-        <td class="result__total">50</td>
-      </tr>
-      <tr>
+        <td class="result__total">${calcItemPoints(state.fast)}</td>
+      </tr>`}
+      ${state.lives === 0 ? `` : `<tr>
         <td></td>
         <td class="result__extra">Бонус за жизни:</td>
-        <td class="result__extra">2&nbsp;<span class="stats__result stats__result--heart"></span></td>
+        <td class="result__extra">${state.lives}&nbsp;<span class="stats__result stats__result--heart"></span></td>
         <td class="result__points">×&nbsp;50</td>
-        <td class="result__total">100</td>
-      </tr>
-      <tr>
+        <td class="result__total">${calcItemPoints(state.lives)}</td>
+      </tr>`}
+      ${state.slow === 0 ? `` : `<tr>
         <td></td>
         <td class="result__extra">Штраф за медлительность:</td>
-        <td class="result__extra">2&nbsp;<span class="stats__result stats__result--slow"></span></td>
+        <td class="result__extra">${state.slow}&nbsp;<span class="stats__result stats__result--slow"></span></td>
         <td class="result__points">×&nbsp;50</td>
-        <td class="result__total">-100</td>
-      </tr>
+        <td class="result__total">-${calcItemPoints(state.slow)}</td>
+      </tr>`}
       <tr>
-        <td colspan="5" class="result__total  result__total--final">950</td>
+        <td colspan="5" class="result__total  result__total--final">${state.allPoints}</td>
       </tr>
     </table>
     <table class="result__table">
@@ -98,3 +103,4 @@ export default `<div class="result">
       </tr>
     </table>
   </div>`;
+};
