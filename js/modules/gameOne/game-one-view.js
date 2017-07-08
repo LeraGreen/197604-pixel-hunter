@@ -12,7 +12,7 @@ export default class GameOneView extends AbstractView {
     this.initialState = initialState;
   }
   get template() {
-    return `${header(this.initialState)}${gameOneString(this.question)}${footer}`.trim();
+    return `${header(this.initialState)}${gameOneString(this.question, this.initialState)}${footer}`.trim();
   }
 
   bind() {

@@ -11,7 +11,7 @@ export default class GameThreeView extends AbstractView {
     this.initialState = initialState;
   }
   get template() {
-    return `${header(this.initialState)}${gameThreeString(this.question)}${footer}`.trim();
+    return `${header(this.initialState)}${gameThreeString(this.question, this.initialState)}${footer}`.trim();
   }
 
   bind() {

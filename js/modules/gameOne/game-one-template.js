@@ -1,6 +1,8 @@
+import {settings} from '../../data/data.js';
+import {showAnswerIcons} from '../../modules/utils.js';
 export default gameOneString;
 
-const gameOneString = (state) => `<div class="game">
+const gameOneString = (state, initialState) => `<div class="game">
     <p class="game__task">${state.question}</p>
     <form class="game__content ${state.mod}">
       <div class="game__option">
@@ -26,16 +28,8 @@ const gameOneString = (state) => `<div class="game">
     </form>
     <div class="stats">
       <ul class="stats">
-        <li class="stats__result stats__result--wrong"></li>
-        <li class="stats__result stats__result--slow"></li>
-        <li class="stats__result stats__result--fast"></li>
-        <li class="stats__result stats__result--correct"></li>
-        <li class="stats__result stats__result--unknown"></li>
-        <li class="stats__result stats__result--unknown"></li>
-        <li class="stats__result stats__result--unknown"></li>
-        <li class="stats__result stats__result--unknown"></li>
-        <li class="stats__result stats__result--unknown"></li>
-        <li class="stats__result stats__result--unknown"></li>
+        ${initialState.answers.length === 0 ? `` : showAnswerIcons(initialState)}
+        ${new Array(settings.screens - initialState.answers.length).fill(`<li class="stats__result stats__result--unknown"></li>`).join(``)}></li>
       </ul>
     </div>
   </div>`;

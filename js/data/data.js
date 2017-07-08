@@ -3,12 +3,7 @@ export const initialState = {
   time: 30,
   nameUser: ``,
   currentQuestion: 0,
-  answers: [],
-  allPoints: 0,
-  correctAnswerPoints: 0,
-  wrong: 0,
-  fast: 0,
-  slow: 0
+  answers: []
 };
 
 export const settings = {
@@ -36,6 +31,7 @@ points[AnswerType.WRONG] = 0;
 points[AnswerType.SLOW] = 50;
 points[AnswerType.CORRECT] = 100;
 points[AnswerType.FAST] = 150;
+
 
 export const questions = [
   {
@@ -76,7 +72,7 @@ export const questions = [
       },
       {
         img: `https://i.imgur.com/DiHM5Zb.jpg`,
-        type: `photo`
+        type: `paint`
       },
       {
         img: `https://i.imgur.com/DiHM5Zb.jpg`,
@@ -101,8 +97,8 @@ export const questions = [
     question: `Угадайте для каждого изображения фото или рисунок?`,
     answers: [
       {
-        img: `http://i.imgur.com/1KegWPz.jpg`,
-        type: `photo`
+        img: `https://media.thequestion.ru/image/with_proportions/744x0/c2cfe70859708eb8aeab11252762c401faf1a92f?url=https%3A%2F%2Fthequestion.s3.eu-central-1.amazonaws.com%2F292%2F383086-fcfd072f.jpeg`,
+        type: `paint`
       },
       {
         img: `https://i.imgur.com/DiHM5Zb.jpg`,
@@ -117,7 +113,7 @@ export const questions = [
     searchType: `photo`,
     answers: [
       {
-        img: `https://k42.kn3.net/CF42609C8.jpg`,
+        img: `http://artifex.ru/wp-content/uploads/2016/10/Живопись_Стефан-Пабст_06.jpg`,
         type: `paint`
       },
       {
@@ -147,8 +143,8 @@ export const questions = [
     question: `Угадайте для каждого изображения фото или рисунок?`,
     answers: [
       {
-        img: `http://i.imgur.com/DKR1HtB.jpg`,
-        type: `photo`
+        img: `http://blogcache.artron.net/201104/24/67347_1303647842e3g7.jpg`,
+        type: `paint`
       },
       {
         img: `https://i.imgur.com/DiHM5Zb.jpg`,
@@ -163,11 +159,11 @@ export const questions = [
     searchType: `paint`,
     answers: [
       {
-        img: `http://i.imgur.com/DKR1HtB.jpg`,
+        img: `https://k42.kn3.net/D2F0370D6.jpg`,
         type: `photo`
       },
       {
-        img: `https://i.imgur.com/DiHM5Zb.jpg`,
+        img: `http://www.pirojok.net/uploads/posts/2012-10/1351025457_01.jpg`,
         type: `paint`
       },
       {
@@ -199,45 +195,41 @@ export const makeArrOfCorrectAnswers = (state) => {
   });
 };
 
-export const calcCorrectAnswersPoints = (state, arr) => {
-  state.correctAnswerPoints = arr.length * 100;
+export const calcCorrectAnswersPoints = (arr) => {
+  return arr.length * 100;
 };
 
-export const calcAllPoints = (state) => {
+export const calcPoints = (state) => {
   const answers = state.answers;
   let stats = 0;
   for (let answer of answers) {
     stats = stats + points[answer];
   }
   stats = stats + calcItemPoints(state.lives);
-  state.allPoints = stats;
-  return state;
+  return stats;
 };
 
 export const calcItemPoints = (num) => {
-  let itemPoints = 0;
-  for (let i = num; i > 0; i--) {
-    itemPoints += 50;
-  }
-  return itemPoints;
+  return num * 50;
 };
 
 export const checkAnswerType = (time) => {
+  const answerTime = settings.timeToAnswer - time;
   let answer;
-  if (time < 0) {
-    answer = AnswerType.WRONG;
+  if (answerTime < 0) {
+    throw new RangeError(`Can't set time more then timeToAnswer`);
   }
-  if (time >= 0 && time < 10) {
+  if (answerTime >= 0 && answerTime < 10) {
     answer = AnswerType.FAST;
   }
-  if (time > 20 && time <= 30) {
+  if (answerTime > 20 && answerTime <= 30) {
     answer = AnswerType.SLOW;
   }
-  if (time >= 10 && time <= 20) {
+  if (answerTime >= 10 && answerTime <= 20) {
     answer = AnswerType.CORRECT;
   }
-  if (time > settings.timeToAnswer) {
-    throw new RangeError(`Can't set time more then timeToAnswer`);
+  if (answerTime > settings.timeToAnswer) {
+    answer = AnswerType.WRONG;
   }
   return answer;
 };
@@ -264,7 +256,7 @@ export const checkAnswer = (state, answer) => {
 
 export const tickTimer = (state) => {
   if (state.time < 0) {
-    throw new RangeError(`Can't set time more then timeToAnswer`);
+    throw new RangeError(`Can't set time less then zero`);
   }
 
   state = Object.assign({}, state, {
@@ -303,8 +295,17 @@ export const calcAnswers = (state, answerType) => {
       num += 1;
     }
   }
-  state[answerType] = num;
-  return state;
+  return num;
+};
+
+export const createQuestions = () => {
+  for (let i = 0; i < questions.length; i++) {
+    const indexOne = Math.floor(Math.random() * questions.length);
+    const indexTwo = Math.floor(Math.random() * questions.length);
+    const element = questions[indexOne];
+    questions[indexOne] = questions[indexTwo];
+    questions[indexTwo] = element;
+  }
 };
 
 

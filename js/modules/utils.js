@@ -34,3 +34,11 @@ export const createImg = (parentNodes, questions) => {
     };
   }
 };
+
+export const showAnswerIcons = (state) => {
+  let iconsArray = [];
+  for (let i = 0; i < state.answers.length; i++) {
+    iconsArray.push(`<li class="stats__result stats__result--${state.answers[i]}"></li>`);
+  }
+  return iconsArray.join(``);
+};

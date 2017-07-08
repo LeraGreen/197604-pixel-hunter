@@ -13,7 +13,7 @@ export default class GameTwoView extends AbstractView {
   }
 
   get template() {
-    return `${header(this.initialState)}${gameTwoString(this.question)}${footer}`.trim();
+    return `${header(this.initialState)}${gameTwoString(this.question, this.initialState)}${footer}`.trim();
   }
 
   bind() {
