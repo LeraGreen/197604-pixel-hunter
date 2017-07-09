@@ -2,7 +2,7 @@ import AbstractView from '../../view.js';
 import footer from '../footer/footer-template.js';
 import header from '../header/header-template.js';
 import statsIcons from '../stats/stats-icons.js';
-import {calcPoints, makeArrOfCorrectAnswers, calcAnswers, calcCorrectAnswersPoints, calcItemPoints, settings} from '../../data/data.js';
+import {calcPoints, makeArrOfCorrectAnswers, calcAnswers, calcCorrectAnswersPoints, calcItemPoints} from '../../data/data.js';
 
 export default class StatsView extends AbstractView {
   constructor(state) {
