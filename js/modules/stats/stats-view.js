@@ -1,7 +1,7 @@
 import AbstractView from '../../view.js';
 import footer from '../footer/footer-template.js';
 import header from '../header/header-template.js';
-import {showAnswerIcons} from '../../modules/utils.js';
+import statsIcons from '../stats/stats-icons.js';
 import {calcPoints, makeArrOfCorrectAnswers, calcAnswers, calcCorrectAnswersPoints, calcItemPoints, settings} from '../../data/data.js';
 
 export default class StatsView extends AbstractView {
@@ -33,21 +33,20 @@ export default class StatsView extends AbstractView {
         <td class="result__number">1.</td>
         <td colspan="2">
           <ul class="stats">
-            ${this.state.answers.length === 0 ? `` : showAnswerIcons(this.state)}
-            ${new Array(settings.screens - this.state.answers.length).fill(`<li class="stats__result stats__result--unknown"></li>`).join(``)}
+            ${statsIcons(this.state)}
           </ul>
         </td>
         ${this.state.lives === 0 ? `` : `<td class="result__points">×&nbsp;100</td>
         <td class="result__total">${calcCorrectAnswersPoints(makeArrOfCorrectAnswers(this.state))}</td>`}
       </tr>
-      ${this.state.lives === 0 ? `` : this.getRows()}
+      ${this.state.lives === 0 ? `` : this.getBonuses()}
       ${this.state.lives === 0 ? `` : `<tr>
         <td colspan="5" class="result__total  result__total--final">${calcPoints(this.state)}</td>
       </tr>` }
     </table>`;
   }
 
-  getRows() {
+  getBonuses() {
     return `
       ${calcAnswers(this.state, `fast`) === 0 ? `` : `<tr>
         <td></td>

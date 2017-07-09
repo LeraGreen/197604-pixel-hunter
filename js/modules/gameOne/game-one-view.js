@@ -5,14 +5,14 @@ import gameOneString from './game-one-template.js';
 import {createImg} from '../utils.js';
 
 export default class GameOneView extends AbstractView {
-  constructor(question, initialState) {
+  constructor(question, state) {
     super();
     this.question = question;
     this.answers = [];
-    this.initialState = initialState;
+    this.state = state;
   }
   get template() {
-    return `${header(this.initialState)}${gameOneString(this.question, this.initialState)}${footer}`.trim();
+    return `${header(this.state)}${gameOneString(this.question, this.state)}${footer}`.trim();
   }
 
   bind() {

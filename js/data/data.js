@@ -216,20 +216,20 @@ export const calcItemPoints = (num) => {
 export const checkAnswerType = (time) => {
   const answerTime = settings.timeToAnswer - time;
   let answer;
-  if (answerTime < 0) {
-    throw new RangeError(`Can't set time more then timeToAnswer`);
+  if (time < 0) {
+    answer = AnswerType.WRONG;
   }
   if (answerTime >= 0 && answerTime < 10) {
     answer = AnswerType.FAST;
   }
-  if (answerTime > 20 && answerTime <= 30) {
+  if (answerTime > 20 && answerTime <= settings.timeToAnswer) {
     answer = AnswerType.SLOW;
   }
   if (answerTime >= 10 && answerTime <= 20) {
     answer = AnswerType.CORRECT;
   }
-  if (answerTime > settings.timeToAnswer) {
-    answer = AnswerType.WRONG;
+  if (time > settings.timeToAnswer) {
+    throw new RangeError(`Answer can't take time more then setting`);
   }
   return answer;
 };

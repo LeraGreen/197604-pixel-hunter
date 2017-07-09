@@ -4,13 +4,13 @@ import GameThreeView from '../gameThree/game-three-view.js';
 import {showScreen} from '../utils.js';
 import greetingScreen from '../greeting/greeting.js';
 import statsScreen from '../stats/stats.js';
-import {initialState, settings, checkAnswer, checkAnswerType, tickTimer, clearTimer, updateLives, ScreenType} from '../../data/data.js';
+import {settings, checkAnswer, checkAnswerType, tickTimer, clearTimer, updateLives, ScreenType} from '../../data/data.js';
 
 export default class GameScreen {
   constructor(questions, state) {
     this.questions = questions;
     this.state = state;
-    this.currentQuestion = initialState.currentQuestion;
+    this.currentQuestion = this.state.currentQuestion;
   }
 
   tickTimer() {

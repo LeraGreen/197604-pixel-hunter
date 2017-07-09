@@ -5,13 +5,13 @@ import {createImg} from '../utils.js';
 import gameThreeString from './game-three-template.js';
 
 export default class GameThreeView extends AbstractView {
-  constructor(question, initialState) {
+  constructor(question, state) {
     super();
     this.question = question;
-    this.initialState = initialState;
+    this.state = state;
   }
   get template() {
-    return `${header(this.initialState)}${gameThreeString(this.question, this.initialState)}${footer}`.trim();
+    return `${header(this.state)}${gameThreeString(this.question, this.state)}${footer}`.trim();
   }
 
   bind() {

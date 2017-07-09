@@ -6,14 +6,14 @@ import gameTwoString from './game-two-template.js';
 
 
 export default class GameTwoView extends AbstractView {
-  constructor(question, initialState) {
+  constructor(question, state) {
     super();
-    this.initialState = initialState;
+    this.state = state;
     this.question = question;
   }
 
   get template() {
-    return `${header(this.initialState)}${gameTwoString(this.question, this.initialState)}${footer}`.trim();
+    return `${header(this.state)}${gameTwoString(this.question, this.state)}${footer}`.trim();
   }
 
   bind() {

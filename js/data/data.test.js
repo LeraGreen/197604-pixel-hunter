@@ -1,5 +1,5 @@
 import assert from 'assert';
-import {checkAnswer, checkAnswerType, calcItemPoints, tickTimer, clearTimer, updateLives, calcAllPoints, makeArrOfCorrectAnswers} from './data.js';
+import {checkAnswer, checkAnswerType, tickTimer, clearTimer, updateLives, calcPoints} from './data.js';
 
 describe(`right answers`, () => {
 
@@ -118,40 +118,24 @@ describe(`right answers`, () => {
 });
 
 describe(`type of questions`, () => {
-  it(`Should return slow if questions correct and take less then 30 seconds`, () => {
-    assert.equal(checkAnswerType(22), `slow`);
-  });
-
   it(`Should return fast if questions correct and take less then 10 seconds`, () => {
-    assert.equal(checkAnswerType(9), `fast`);
+    assert.equal(checkAnswerType(22), `fast`);
   });
 
-  it(`Should return wrong if questions not correct or user didn't answer`, () => {
+  it(`Should return slow if questions correct and take less then 30 seconds`, () => {
+    assert.equal(checkAnswerType(9), `slow`);
+  });
+
+  it(`should return wrong if user didn't answer or answer incorrect`, () => {
     assert.equal(checkAnswerType(-1), `wrong`);
   });
 
-  it(`should fail on negative values`, () => {
+  it(`should fail if values more that setting`, () => {
     const setWrongTime = () => {
       checkAnswerType(32);
     };
 
     assert.throws(setWrongTime);
-  });
-});
-
-describe(`answers`, () => {
-  it(`Should return array without wrong answers`, () => {
-    const initialState = {
-      answers: [`wrong`, `fast`, `fast`, `slow`]
-    };
-    assert.deepEqual(makeArrOfCorrectAnswers(initialState), [`fast`, `fast`, `slow`]);
-  });
-
-  it(`Should return empty array`, () => {
-    const initialState = {
-      answers: [`wrong`, `wrong`, `wrong`]
-    };
-    assert.deepEqual(makeArrOfCorrectAnswers(initialState), []);
   });
 });
 
@@ -231,50 +215,30 @@ describe(`lives`, () => {
 });
 
 describe(`points`, () => {
-  describe(`points from lives`, () => {
-    it(`Should return 50 if one life is left`, () => {
-      assert.equal(calcItemPoints(1), 50);
-    });
-
-    it(`Should return 100 if two lives are left`, () => {
-      assert.equal(calcItemPoints(2), 100);
-    });
-
-    it(`Should return 150 if three lives are left`, () => {
-      assert.equal(calcItemPoints(3), 150);
-    });
-
-    it(`Should return 0 if 0 life is left`, () => {
-      assert.equal(calcItemPoints(0), 0);
-    });
-  });
 
   describe(`points from answers`, () => {
     it(`Should return 500 points`, () => {
       const initialState = {
         lives: 3,
-        answers: [`wrong`, `fast`, `fast`, `slow`],
-        allPoints: 0
+        answers: [`wrong`, `fast`, `fast`, `slow`]
       };
-      assert.equal(calcAllPoints(initialState).allPoints, 500);
+      assert.equal(calcPoints(initialState), 500);
     });
 
     it(`Should return 200 points`, () => {
       const initialState = {
         lives: 0,
-        answers: [`wrong`, `wrong`, `fast`, `slow`],
-        allPoints: 0
+        answers: [`wrong`, `wrong`, `fast`, `slow`]
       };
-      assert.equal(calcAllPoints(initialState).allPoints, 200);
+      assert.equal(calcPoints(initialState), 200);
     });
 
     it(`Should return 0 points`, () => {
       const initialState = {
         lives: 0,
-        answers: [`wrong`, `wrong`, `wrong`],
-        allPoints: 0
+        answers: [`wrong`, `wrong`, `wrong`]
       };
-      assert.equal(calcAllPoints(initialState).allPoints, 0);
+      assert.equal(calcPoints(initialState), 0);
     });
   });
 });

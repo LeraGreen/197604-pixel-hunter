@@ -1,10 +1,9 @@
-import {settings} from '../../data/data.js';
-import {showAnswerIcons} from '../../modules/utils.js';
+import statsIcons from '../stats/stats-icons.js';
 export default gameOneString;
 
-const gameOneString = (state, initialState) => `<div class="game">
-    <p class="game__task">${state.question}</p>
-    <form class="game__content ${state.mod}">
+const gameOneString = (question, state) => `<div class="game">
+    <p class="game__task">${question.question}</p>
+    <form class="game__content ${question.mod}">
       <div class="game__option">
         <label class="game__answer game__answer--photo">
           <input name="question1" type="radio" value="photo">
@@ -28,8 +27,7 @@ const gameOneString = (state, initialState) => `<div class="game">
     </form>
     <div class="stats">
       <ul class="stats">
-        ${initialState.answers.length === 0 ? `` : showAnswerIcons(initialState)}
-        ${new Array(settings.screens - initialState.answers.length).fill(`<li class="stats__result stats__result--unknown"></li>`).join(``)}></li>
+        ${statsIcons(state)}
       </ul>
     </div>
   </div>`;
