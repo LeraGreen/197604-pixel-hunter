@@ -1,7 +1,7 @@
 import AbstractView from '../../view.js';
 import footer from '../footer/footer-template.js';
 import header from '../header/header-template.js';
-import statsIcons from '../stats/stats-icons.js';
+import {statsIcons} from '../stats/stats-icons.js';
 import {calcPoints, makeArrOfCorrectAnswers, calcAnswers, calcCorrectAnswersPoints, calcItemPoints} from '../../data/data.js';
 
 export default class StatsView extends AbstractView {
@@ -32,9 +32,7 @@ export default class StatsView extends AbstractView {
       <tr>
         <td class="result__number">1.</td>
         <td colspan="2">
-          <ul class="stats">
-            ${statsIcons(this.state)}
-          </ul>
+          ${statsIcons(this.state)}
         </td>
         ${this.state.lives === 0 ? `` : `<td class="result__points">×&nbsp;100</td>
         <td class="result__total">${calcCorrectAnswersPoints(makeArrOfCorrectAnswers(this.state))}</td>`}

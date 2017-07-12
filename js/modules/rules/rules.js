@@ -10,11 +10,9 @@ export default () => {
     showScreen(greetingScreen());
   };
   rulesScreen.submitForm = () => {
-    const copyInitialState = Object.assign({}, initialState, {
-      answers: []
-    });
-    const gameScreen = new GameScreen(questions, copyInitialState);
-    showScreen(gameScreen.changeLevel(questions, copyInitialState.currentQuestion));
+    initialState.answers = [];
+    const gameScreen = new GameScreen(questions, initialState);
+    showScreen(gameScreen.changeLevel(questions, initialState.currentQuestion));
   };
   return rulesScreen;
 };

@@ -1,5 +1,4 @@
-import statsIcons from '../stats/stats-icons.js';
-export default gameTwoString;
+import {statsIcons} from '../stats/stats-icons.js';
 
 const gameTwoString = (question, state) => `<div class="game">
     <p class="game__task">${question.question}</p>
@@ -16,8 +15,9 @@ const gameTwoString = (question, state) => `<div class="game">
       </div>
     </form>
     <div class="stats">
-      <ul class="stats">
       ${statsIcons(state)}
-      </ul>
-    </div>
+     </div>
   </div>`;
+
+export default gameTwoString;
+
