@@ -3,22 +3,23 @@ import header from '../header/header-template.js';
 import footer from '../footer/footer-template.js';
 import {createImg} from '../utils.js';
 import gameThreeString from './game-three-template.js';
-import {initialState} from '../../data/data.js';
 
 export default class GameThreeView extends AbstractView {
-  constructor(question) {
+  constructor(question, state) {
     super();
     this.question = question;
+    this.state = state;
   }
   get template() {
-    return `${header(initialState)}${gameThreeString(this.question)}${footer}`.trim();
+    return `${header(this.state)}${gameThreeString(this.question, this.state)}${footer}`.trim();
   }
 
   bind() {
     const gameOptions = this.element.querySelectorAll(`.game__option`);
-    for (const option of gameOptions) {
-      option.addEventListener(`click`, () => {
-        this.changeScreen();
+    this.timerContainer = this.element.querySelector(`.game__timer`);
+    for (let i = 0; i < gameOptions.length; i++) {
+      gameOptions[i].addEventListener(`click`, () => {
+        this.onAnswer(this.question, i);
       });
     }
 
@@ -37,6 +38,12 @@ export default class GameThreeView extends AbstractView {
 
   onBackButtonClick() {
 
+  }
+
+  updateTimer(state) {
+    if (this.element) {
+      this.timerContainer.textContent = state.time;
+    }
   }
 }
 

@@ -3,15 +3,16 @@ import header from '../header/header-template.js';
 import footer from '../footer/footer-template.js';
 import gameOneString from './game-one-template.js';
 import {createImg} from '../utils.js';
-import {initialState} from '../../data/data.js';
 
 export default class GameOneView extends AbstractView {
-  constructor(question) {
+  constructor(question, state) {
     super();
     this.question = question;
+    this.answers = [];
+    this.state = state;
   }
   get template() {
-    return `${header(initialState)}${gameOneString(this.question)}${footer}`.trim();
+    return `${header(this.state)}${gameOneString(this.question, this.state)}${footer}`.trim();
   }
 
   bind() {
@@ -19,6 +20,7 @@ export default class GameOneView extends AbstractView {
     const backButton = this.element.querySelector(`.header__back`);
     this.form = this.element.querySelector(`.game__content`);
     createImg(containers, this.question);
+    this.timerContainer = this.element.querySelector(`.game__timer`);
     this.form.addEventListener(`change`, () => this.countCheckedButtons());
     backButton.addEventListener(`click`, () => {
       this.onBackButtonClick();
@@ -33,6 +35,7 @@ export default class GameOneView extends AbstractView {
     const radioButtons = this.form.querySelectorAll(`input[name=${radioName}]`);
     for (const radio of radioButtons) {
       if (radio.checked) {
+        this.answers.push(radio.value);
         return true;
       }
     }
@@ -42,7 +45,13 @@ export default class GameOneView extends AbstractView {
   countCheckedButtons() {
     if (this.checkRadioButton(`question1`) && this.checkRadioButton(`question2`)) {
       event.preventDefault();
-      this.changeScreen();
+      this.onAnswer(this.question, this.answers);
+    }
+  }
+
+  updateTimer(state) {
+    if (this.element) {
+      this.timerContainer.textContent = state.time;
     }
   }
 }

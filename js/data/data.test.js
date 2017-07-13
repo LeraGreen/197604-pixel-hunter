@@ -1,194 +1,244 @@
 import assert from 'assert';
-import {checkAnswer, checkAnswers, checkAnswerType, calcLivesPoints} from './data.js';
+import {checkAnswer, checkAnswerType, tickTimer, clearTimer, updateLives, calcPoints} from './data.js';
 
 describe(`right answers`, () => {
 
   describe(`one answer from three`, () => {
     it(`Should return true if received answer equal correct answer`, () => {
       const roundState = {
-        type: `one is right`,
-        questions: [
+        type: `gameThree`,
+        searchType: `paint`,
+        answers: [
           {
-            isPhoto: true
+            type: `photo`
           },
           {
-            isPhoto: false
+            type: `paint`
           },
           {
-            isPhoto: true
+            type: `photo`
           },
         ]
       };
-      const userAnswer = {
-        num: 1,
-        answer: false
-      };
-      assert.equal(checkAnswer(roundState.questions, userAnswer.num, userAnswer.answer), true);
+      assert.equal(checkAnswer(roundState, 1), true);
     });
 
     it(`Should return false if received answer not equal correct answer`, () => {
       const roundState = {
-        type: `one is right`,
-        questions: [
+        type: `gameThree`,
+        searchType: `paint`,
+        answers: [
           {
-            isPhoto: true
+            type: `photo`
           },
           {
-            isPhoto: false
+            type: `paint`
           },
           {
-            isPhoto: true
+            type: `photo`
           },
         ]
       };
-      const userAnswer = {
-        num: 2,
-        answer: false
-      };
-      assert.equal(checkAnswer(roundState.questions, userAnswer.num, userAnswer.answer), false);
+      assert.equal(checkAnswer(roundState, 2), false);
     });
   });
 
   describe(`one picture on screen`, () => {
     it(`Should return true if received answer equal correct answer`, () => {
       const roundState = {
-        type: `one picture`,
-        questions: [
+        type: `gameTwo`,
+        answers: [
           {
-            isPhoto: false
+            type: `paint`
           }
         ]
       };
-      const userAnswer = {
-        num: 0,
-        answer: false
-      };
-      assert.equal(checkAnswer(roundState.questions, userAnswer.num, userAnswer.answer), true);
+      assert.equal(checkAnswer(roundState, `paint`), true);
     });
 
     it(`Should return false if received answer not equal correct answer`, () => {
       const roundState = {
-        type: `one picture`,
-        questions: [
+        type: `gameTwo`,
+        answers: [
           {
-            isPhoto: false
+            type: `paint`
           }
         ]
       };
-      const userAnswer = {
-        num: 0,
-        answer: true
-      };
-      assert.equal(checkAnswer(roundState.questions, userAnswer.num, userAnswer.answer), false);
+      assert.equal(checkAnswer(roundState, `photo`), false);
     });
   });
 
   describe(`two pictures on screen`, () => {
     it(`Should return true if received answers equal correct answers`, () => {
       const roundState = {
-        type: `two questions`,
-        questions: [
+        type: `gameOne`,
+        answers: [
           {
-            isPhoto: true
+            type: `photo`
           },
           {
-            isPhoto: false
+            type: `paint`
           }
         ]
       };
-      const userAnswer = {
-        answer: [true, false]
-      };
-      assert.equal(checkAnswers(roundState, userAnswer), true);
+      assert.equal(checkAnswer(roundState, [`photo`, `paint`]), true);
     });
 
     it(`Should return false if two received answers not equal correct answers`, () => {
       const roundState = {
-        type: `two questions`,
-        questions: [
+        type: `gameOne`,
+        answers: [
           {
-            isPhoto: true
+            type: `photo`
           },
           {
-            isPhoto: false
+            type: `paint`
           }
         ]
       };
-      const userAnswer = {
-        answer: [false, true]
-      };
-      assert.equal(checkAnswers(roundState, userAnswer), false);
+      assert.equal(checkAnswer(roundState, [`paint`, `photo`]), false);
     });
 
     it(`Should return false if one received answer not equal correct answers`, () => {
       const roundState = {
-        type: `two questions`,
-        questions: [
+        type: `gameOne`,
+        answers: [
           {
-            isPhoto: true
+            type: `photo`
           },
           {
-            isPhoto: false
+            type: `paint`
           }
         ]
       };
-      const userAnswer = {
-        answer: [false, false]
-      };
-      assert.equal(checkAnswers(roundState, userAnswer), false);
+      assert.equal(checkAnswer(roundState, [`paint`, `paint`]), false);
     });
   });
 });
 
 describe(`type of questions`, () => {
-  it(`Should return slow if questions correct and take less then 30 seconds`, () => {
-    const userAnswer = {
-      time: 22
-    };
-    assert.equal(checkAnswerType(userAnswer.time), `slow`);
-  });
-
   it(`Should return fast if questions correct and take less then 10 seconds`, () => {
-    const userAnswer = {
-      time: 9
-    };
-    assert.equal(checkAnswerType(userAnswer.time), `fast`);
+    assert.equal(checkAnswerType(22), `fast`);
   });
 
-  it(`Should return wrong if questions not correct or user didn't answer`, () => {
-    const userAnswer = {
-      time: -1
+  it(`Should return slow if questions correct and take less then 30 seconds`, () => {
+    assert.equal(checkAnswerType(9), `slow`);
+  });
+
+  it(`should return wrong if user didn't answer or answer incorrect`, () => {
+    assert.equal(checkAnswerType(-1), `wrong`);
+  });
+
+  it(`should fail if values more that setting`, () => {
+    const setWrongTime = () => {
+      checkAnswerType(32);
     };
-    assert.equal(checkAnswerType(userAnswer.time), `wrong`);
+
+    assert.throws(setWrongTime);
   });
 });
 
-describe(`points from lives`, () => {
-  it(`Should return 50 if one life is left`, () => {
-    const initialState = {
-      lives: 1
-    };
-    assert.equal(calcLivesPoints(initialState), 50);
+
+describe(`timer`, () => {
+  describe(`update timer`, () => {
+    it(`Should return 0 in time property`, () => {
+      const initialState = {
+        time: 1
+      };
+      assert.equal(tickTimer(initialState).time, 0);
+    });
+
+    it(`Should return 8 in time property`, () => {
+      const initialState = {
+        time: 9
+      };
+      assert.equal(tickTimer(initialState).time, 8);
+    });
+
+    it(`should fail on negative values`, () => {
+      const initialState = {
+        time: -1
+      };
+      const setWrongTime = () => {
+        tickTimer(initialState);
+      };
+
+      assert.throws(setWrongTime);
+    });
   });
 
-  it(`Should return 100 if two lives are left`, () => {
-    const initialState = {
-      lives: 2
-    };
-    assert.equal(calcLivesPoints(initialState), 100);
-  });
+  describe(`clear timer`, () => {
+    it(`Should return 30 in time property`, () => {
+      const initialState = {
+        time: 20
+      };
+      assert.equal(clearTimer(initialState).time, 30);
+    });
 
-  it(`Should return 150 if three lives are left`, () => {
-    const initialState = {
-      lives: 3
-    };
-    assert.equal(calcLivesPoints(initialState), 150);
+    it(`Should return 30 in time property`, () => {
+      const initialState = {
+        time: 10
+      };
+      assert.equal(clearTimer(initialState).time, 30);
+    });
   });
+});
 
-  it(`Should return 0 if 0 life is left`, () => {
-    const initialState = {
-      lives: 0
-    };
-    assert.equal(calcLivesPoints(initialState), 0);
+describe(`lives`, () => {
+  describe(`update lives`, () => {
+    it(`Should return 2 in lives property`, () => {
+      const initialState = {
+        lives: 3
+      };
+      assert.equal(updateLives(initialState).lives, 2);
+    });
+
+    it(`Should return 0 in lives property`, () => {
+      const initialState = {
+        lives: 0
+      };
+      assert.equal(updateLives(initialState).lives, 0);
+    });
+
+    it(`should fail on negative values`, () => {
+      const initialState = {
+        lives: -1
+      };
+      const setNegativeLives = () => {
+        updateLives(initialState);
+      };
+
+      assert.throws(setNegativeLives);
+    });
+  });
+});
+
+describe(`points`, () => {
+
+  describe(`points from answers`, () => {
+    it(`Should return 500 points`, () => {
+      const initialState = {
+        lives: 3,
+        answers: [`wrong`, `fast`, `fast`, `slow`]
+      };
+      assert.equal(calcPoints(initialState), 500);
+    });
+
+    it(`Should return 200 points`, () => {
+      const initialState = {
+        lives: 0,
+        answers: [`wrong`, `wrong`, `fast`, `slow`]
+      };
+      assert.equal(calcPoints(initialState), 200);
+    });
+
+    it(`Should return 0 points`, () => {
+      const initialState = {
+        lives: 0,
+        answers: [`wrong`, `wrong`, `wrong`]
+      };
+      assert.equal(calcPoints(initialState), 0);
+    });
   });
 });
