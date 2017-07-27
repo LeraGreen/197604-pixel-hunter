@@ -4,15 +4,23 @@ import RulesView from './rules-view.js';
 import GameScreen from '../game/game-screen.js';
 import {questions, initialState} from '../../data/data.js';
 
-export default () => {
-  const rulesScreen = new RulesView();
-  rulesScreen.onBackButtonClick = () => {
-    showScreen(greetingScreen());
-  };
-  rulesScreen.submitForm = () => {
-    initialState.answers = [];
-    const gameScreen = new GameScreen(questions, initialState);
-    showScreen(gameScreen.changeLevel(questions, initialState.currentQuestion));
-  };
-  return rulesScreen;
-};
+import Application from '../../modules/app/app.js';
+
+export default class RulesScreen {
+  constructor() {
+    this.view = new RulesView();
+  }
+
+  init() {
+    this.view.onBackButtonClick = () => {
+      Application.showGreeting();
+    };
+    this.view.submitForm = () => {
+      initialState.answers = [];
+      Application.showGame();
+      // const gameScreen = new GameScreen(questions, initialState);
+      // showScreen(gameScreen.changeLevel(questions, initialState.currentQuestion));
+    };
+    showScreen(this.view);
+  }
+}
