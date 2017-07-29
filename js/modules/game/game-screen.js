@@ -2,9 +2,7 @@ import GameOneView from '../gameOne/game-one-view.js';
 import GameTwoView from '../gameTwo/game-two-view.js';
 import GameThreeView from '../gameThree/game-three-view.js';
 import {showScreen} from '../utils.js';
-import greetingScreen from '../greeting/greeting.js';
-import statsScreen from '../stats/stats.js';
-import {settings, checkAnswer, checkAnswerType, tickTimer, clearTimer, updateLives, ScreenType, questions, initialState} from '../../data/data.js';
+import {settings, checkAnswer, checkAnswerType, tickTimer, clearTimer, updateLives, ScreenType} from '../../data/data.js';
 import Application from '../../modules/app/app.js';
 
 export default class GameScreen {
@@ -34,7 +32,7 @@ export default class GameScreen {
   }
 
   init() {
-    showScreen(this.changeLevel(questions, initialState.currentQuestion));
+    showScreen(this.changeLevel(this.questions, this.currentQuestion));
   }
 
   changeLevel(questions, number) {
@@ -55,6 +53,7 @@ export default class GameScreen {
 
     this.view.onBackButtonClick = () => {
       this.stopTimer();
+      Application.init();
       Application.showGreeting();
     };
 
@@ -63,9 +62,10 @@ export default class GameScreen {
 
       if (this.number < settings.screens - 1 && this.state.lives !== 0) {
         this.currentQuestion = ++this.number;
-        showScreen(this.changeLevel(this.questions, this.currentQuestion));
+        Application.showGame();
       } else {
         Application.showStats(this.state);
+        Application.init();
       }
     };
 

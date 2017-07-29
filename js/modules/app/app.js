@@ -9,6 +9,7 @@ import {questions, initialState} from '../../data/data.js';
 export default class Application {
 
   static init() {
+    this.gameScreen = new GameScreen(questions, initialState);
     createQuestions();
   }
 
@@ -28,8 +29,7 @@ export default class Application {
   }
 
   static showGame() {
-    const gameScreen = new GameScreen(questions, initialState);
-    gameScreen.init();
+    this.gameScreen.init();
   }
 
   static showStats(stats) {
