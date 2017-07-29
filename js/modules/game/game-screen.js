@@ -4,7 +4,8 @@ import GameThreeView from '../gameThree/game-three-view.js';
 import {showScreen} from '../utils.js';
 import greetingScreen from '../greeting/greeting.js';
 import statsScreen from '../stats/stats.js';
-import {settings, checkAnswer, checkAnswerType, tickTimer, clearTimer, updateLives, ScreenType} from '../../data/data.js';
+import {settings, checkAnswer, checkAnswerType, tickTimer, clearTimer, updateLives, ScreenType, questions, initialState} from '../../data/data.js';
+import Application from '../../modules/app/app.js';
 
 export default class GameScreen {
   constructor(questions, state) {
@@ -32,6 +33,10 @@ export default class GameScreen {
     this.state = clearTimer(this.state);
   }
 
+  init() {
+    showScreen(this.changeLevel(questions, initialState.currentQuestion));
+  }
+
   changeLevel(questions, number) {
     this.number = number;
     this.questions = questions;
@@ -50,7 +55,7 @@ export default class GameScreen {
 
     this.view.onBackButtonClick = () => {
       this.stopTimer();
-      showScreen(greetingScreen());
+      Application.showGreeting();
     };
 
     this.view.changeScreen = () => {
@@ -60,7 +65,7 @@ export default class GameScreen {
         this.currentQuestion = ++this.number;
         showScreen(this.changeLevel(this.questions, this.currentQuestion));
       } else {
-        showScreen(statsScreen(this.state));
+        Application.showStats(this.state);
       }
     };
 

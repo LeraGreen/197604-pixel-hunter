@@ -1,11 +1,18 @@
 import {showScreen} from '../utils.js';
-import greetingScreen from '../greeting/greeting.js';
 import StatsView from './stats-view.js';
 
-export default (state) => {
-  const statsScreen = new StatsView(state);
-  statsScreen.onBackButtonClick = () => {
-    showScreen(greetingScreen());
-  };
-  return statsScreen;
-};
+
+import Application from '../../modules/app/app.js';
+
+export default class StatsScreen {
+  constructor(state) {
+    this.view = new StatsView(state);
+  }
+
+  init() {
+    this.view.onBackButtonClick = () => {
+      Application.showGreeting();
+    };
+    showScreen(this.view);
+  }
+}

@@ -1,11 +1,10 @@
-import {showScreen} from '../../modules/utils.js';
 import IntroScreen from '../../modules/intro/intro.js';
 import {createQuestions} from '../../data/data.js';
 import GreetingScreen from '../../modules/greeting/greeting.js';
 import RulesScreen from '../../modules/rules/rules.js';
-
-// showScreen(introScreen());
-// createQuestions();
+import GameScreen from '../../modules/game/game-screen.js';
+import StatsScreen from '../../modules/stats/stats.js';
+import {questions, initialState} from '../../data/data.js';
 
 export default class Application {
 
@@ -28,17 +27,13 @@ export default class Application {
     rulesScreen.init();
   }
 
-  // static showWelcome() {
-  //   new GreetingScreen().init();
-  // }
-  //
   static showGame() {
-    console.log(`q`);
-    // newGameScreen.init();
+    const gameScreen = new GameScreen(questions, initialState);
+    gameScreen.init();
   }
-  //
-  // static showStats(stats) {
-  //   statsScreen.init(stats);
-  // }
 
+  static showStats(stats) {
+    const statsScreen = new StatsScreen(stats);
+    statsScreen.init();
+  }
 }
