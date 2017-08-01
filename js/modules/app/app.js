@@ -4,36 +4,59 @@ import GreetingScreen from '../../modules/greeting/greeting.js';
 import RulesScreen from '../../modules/rules/rules.js';
 import GameScreen from '../../modules/game/game-screen.js';
 import StatsScreen from '../../modules/stats/stats.js';
-import {questions, initialState} from '../../data/data.js';
+import {questions, initialState, ControllerID} from '../../data/data.js';
 
-export default class Application {
+const getControllerIDFromHash = (hash) => hash.replace(`#`, ``);
 
-  static init() {
-    this.gameScreen = new GameScreen(questions, initialState);
+class Application {
+
+  init() {
     createQuestions();
   }
 
-  static showIntro() {
+  // setup() {
+  //   this.routes = {
+  //     [ControllerID.INTRO]: new IntroScreen(),
+  //     [ControllerID.GREETING]: new RulesScreen()
+  //   };
+  //
+  //   window.onhashchange = () => {
+  //     this.changeController(getControllerIDFromHash(location.hash));
+  //   };
+  // }
+
+  changeController(route = ``) {
+    this.routes[route].init();
+  }
+
+  showIntro() {
     const introScreen = new IntroScreen();
     introScreen.init();
+    location.hash = ``;
   }
 
-  static showGreeting() {
+  showGreeting() {
     const greetingScreen = new GreetingScreen();
     greetingScreen.init();
+    location.hash = `greeting`;
   }
 
-  static showRules() {
+  showRules() {
     const rulesScreen = new RulesScreen();
     rulesScreen.init();
+    location.hash = `rules`;
   }
 
-  static showGame() {
-    this.gameScreen.init();
+  showGame() {
+    const gameScreen = new GameScreen();
+    gameScreen.init();
   }
 
-  static showStats(stats) {
+  showStats(stats) {
     const statsScreen = new StatsScreen(stats);
     statsScreen.init();
   }
 }
+
+const app = new Application();
+export default app;

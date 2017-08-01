@@ -14,7 +14,6 @@ export default class RulesScreen {
       Application.showGreeting();
     };
     this.view.submitForm = () => {
-      initialState.answers = [];
       Application.showGame();
     };
     showScreen(this.view);

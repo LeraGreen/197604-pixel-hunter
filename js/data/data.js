@@ -6,6 +6,15 @@ export const initialState = {
   answers: []
 };
 
+
+export const ControllerID = {
+  INTRO: ``,
+  GREETING: `greeting`,
+  RULES: `rules`,
+  GAME: `game`,
+  SCOREBOARD: `scores`
+};
+
 export const settings = {
   maxLives: 3,
   minLives: 0,

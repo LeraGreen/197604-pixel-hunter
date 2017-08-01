@@ -2,13 +2,14 @@ import GameOneView from '../gameOne/game-one-view.js';
 import GameTwoView from '../gameTwo/game-two-view.js';
 import GameThreeView from '../gameThree/game-three-view.js';
 import {showScreen} from '../utils.js';
-import {settings, checkAnswer, checkAnswerType, tickTimer, clearTimer, updateLives, ScreenType} from '../../data/data.js';
+import {settings, checkAnswer, checkAnswerType, tickTimer, clearTimer, updateLives, ScreenType, questions, initialState} from '../../data/data.js';
 import Application from '../../modules/app/app.js';
 
 export default class GameScreen {
-  constructor(questions, state) {
+  constructor() {
+    initialState.answers = [];
     this.questions = questions;
-    this.state = state;
+    this.state = initialState;
     this.currentQuestion = this.state.currentQuestion;
   }
 
@@ -62,7 +63,7 @@ export default class GameScreen {
 
       if (this.number < settings.screens - 1 && this.state.lives !== 0) {
         this.currentQuestion = ++this.number;
-        Application.showGame();
+        this.init();
       } else {
         Application.showStats(this.state);
         Application.init();
