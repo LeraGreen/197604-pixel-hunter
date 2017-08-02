@@ -4,7 +4,7 @@ import GreetingScreen from '../../modules/greeting/greeting.js';
 import RulesScreen from '../../modules/rules/rules.js';
 import GameScreen from '../../modules/game/game-screen.js';
 import StatsScreen from '../../modules/stats/stats.js';
-import {questions, initialState, ControllerID} from '../../data/data.js';
+import {ControllerID} from '../../data/data.js';
 
 const getControllerIDFromHash = (hash) => hash.replace(`#`, ``);
 
@@ -12,49 +12,45 @@ class Application {
 
   init() {
     createQuestions();
+    this.setup();
+    this.changeController(getControllerIDFromHash(location.hash));
   }
 
-  // setup() {
-  //   this.routes = {
-  //     [ControllerID.INTRO]: new IntroScreen(),
-  //     [ControllerID.GREETING]: new RulesScreen()
-  //   };
-  //
-  //   window.onhashchange = () => {
-  //     this.changeController(getControllerIDFromHash(location.hash));
-  //   };
-  // }
+  setup() {
+    this.routes = {
+      [ControllerID.INTRO]: new IntroScreen(),
+      [ControllerID.GREETING]: new GreetingScreen(),
+      [ControllerID.RULES]: new RulesScreen(),
+      [ControllerID.GAME]: new GameScreen()
+    };
+
+    window.onhashchange = () => {
+      this.changeController(getControllerIDFromHash(location.hash));
+    };
+  }
 
   changeController(route = ``) {
     this.routes[route].init();
   }
 
   showIntro() {
-    const introScreen = new IntroScreen();
-    introScreen.init();
-    location.hash = ``;
+    location.hash = ControllerID.INTRO;
   }
 
   showGreeting() {
-    const greetingScreen = new GreetingScreen();
-    greetingScreen.init();
-    location.hash = `greeting`;
+    location.hash = ControllerID.GREETING;
   }
 
   showRules() {
-    const rulesScreen = new RulesScreen();
-    rulesScreen.init();
-    location.hash = `rules`;
+    location.hash = ControllerID.RULES;
   }
 
   showGame() {
-    const gameScreen = new GameScreen();
-    gameScreen.init();
+    location.hash = ControllerID.GAME;
   }
 
   showStats(stats) {
-    const statsScreen = new StatsScreen(stats);
-    statsScreen.init();
+    location.hash = ControllerID.SCOREBOARD;
   }
 }
 
