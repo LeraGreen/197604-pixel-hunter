@@ -6,6 +6,15 @@ export const initialState = {
   answers: []
 };
 
+
+export const ControllerID = {
+  INTRO: ``,
+  GREETING: `greeting`,
+  RULES: `rules`,
+  GAME: `game`,
+  SCOREBOARD: `scores`
+};
+
 export const settings = {
   maxLives: 3,
   minLives: 0,
@@ -306,6 +315,20 @@ export const createQuestions = () => {
     questions[indexOne] = questions[indexTwo];
     questions[indexTwo] = element;
   }
+};
+
+export const resize = (frame, given) => {
+  const scaleHeight = frame.height / given.height;
+  const scaleWidth = frame.width / given.width;
+  let scale;
+  if (scaleHeight < scaleWidth) {
+    scale = scaleHeight;
+  } else {
+    scale = scaleWidth;
+  }
+  given.width = given.width * scale;
+  given.height = given.height * scale;
+  return given;
 };
 
 
